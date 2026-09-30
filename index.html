@@ -1,0 +1,2506 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Mentor | AI Automation Roadmap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            900: '#0B132B',
+                            800: '#1C2541',
+                            700: '#2A365C',
+                            600: '#3A4B7C',
+                        },
+                        electric: '#4CC9F0',
+                        royal: '#4361EE',
+                        teal: '#2EC4B6',
+                        amber: '#FF9F1C',
+                        coral: '#FF007F'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar and animations */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0B132B; }
+        ::-webkit-scrollbar-thumb { background: #1C2541; border-radius: 4px; border: 1px solid #3A4B7C; }
+        ::-webkit-scrollbar-thumb:hover { background: #4361EE; }
+        
+        .glow-electric { box-shadow: 0 0 15px rgba(76, 201, 240, 0.25); }
+        .glow-royal { box-shadow: 0 0 20px rgba(67, 97, 238, 0.3); }
+        .glow-amber { box-shadow: 0 0 15px rgba(255, 159, 28, 0.25); }
+        
+        .glass-panel {
+            background: rgba(28, 37, 65, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-subtle { animation: pulse-subtle 3s infinite ease-in-out; }
+        /* Flash Mentor local profile and welcome screen */
+        .flash-profile { display:flex; width:100%; align-items:center; gap:10px; padding:10px; margin-bottom:13px; text-align:left; border:1px solid rgba(255,255,255,.09); border-radius:13px; background:rgba(255,255,255,.035); color:#eef4ff; cursor:pointer; }
+        .flash-profile:hover { border-color:rgba(76,201,240,.38); background:rgba(76,201,240,.07); }
+        .flash-avatar { display:grid; place-items:center; flex:none; width:36px; height:36px; border-radius:50%; color:#071521; font-weight:800; background:linear-gradient(140deg,#4cc9f0,#2ec4b6); }
+        .flash-profile-copy { display:block; min-width:0; flex:1; }
+        .flash-profile-copy strong { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; }
+        .flash-profile-copy small { display:block; margin-top:2px; color:#90a2bd; font-size:9px; }
+        #headerProfile { display:none; }
+        .flash-login-screen { position:fixed; inset:0; z-index:1000; display:none; place-items:center; overflow:auto; padding:24px; background:radial-gradient(900px 500px at 78% -5%,#283e6a 0%,transparent 63%),linear-gradient(145deg,#0b1322,#101b30 58%,#111b2c); }
+        .flash-login-card { width:min(100%,440px); padding:clamp(24px,5vw,40px); border:1px solid rgba(170,198,236,.18); border-radius:24px; color:#eff5ff; background:rgba(23,36,58,.78); box-shadow:0 28px 90px rgba(0,0,0,.34); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); }
+        .flash-login-mark { display:grid; place-items:center; width:54px; height:54px; margin-bottom:24px; border-radius:17px; color:#071521; font-size:25px; background:linear-gradient(135deg,#4cc9f0,#2ec4b6 52%,#7892ff); box-shadow:0 12px 32px rgba(67,97,238,.26); }
+        .flash-login-card h1 { margin:0; font-size:clamp(27px,6vw,34px); line-height:1.15; letter-spacing:-.8px; font-weight:800; }
+        .flash-login-card p { margin:12px 0 25px; color:#aab9cf; font-size:13px; line-height:1.7; }
+        .flash-login-card label { display:block; margin:0 0 8px; color:#d7e3f3; font-size:12px; font-weight:700; }
+        .flash-login-card input { width:100%; height:48px; padding:0 14px; border:1px solid rgba(161,185,218,.25); border-radius:11px; outline:none; color:#f2f6fc; background:rgba(8,17,31,.65); }
+        .flash-login-card input:focus { border-color:#4cc9f0; box-shadow:0 0 0 3px rgba(76,201,240,.17); }
+        .flash-login-submit { width:100%; margin-top:14px; padding:13px 16px; border:0; border-radius:11px; color:#071521; font-weight:800; background:linear-gradient(110deg,#4cc9f0,#54d3bf); cursor:pointer; }
+        .flash-login-submit:hover { filter:brightness(1.06); }
+        .flash-login-footnote { margin:17px 0 0 !important; color:#8397b2 !important; font-size:10px !important; }
+        #flashProfileLogout { display:none; margin-top:12px; padding:8px 0; border:0; color:#aebed4; background:none; font-size:11px; text-decoration:underline; cursor:pointer; }
+        body.light-mode .flash-profile { color:#1d304b; border-color:rgba(100,129,171,.2); background:rgba(255,255,255,.48); }
+        body.light-mode .flash-profile:hover { background:rgba(255,255,255,.78); }
+        body.light-mode .flash-profile-copy small { color:#71839e; }
+        body.light-mode .flash-login-screen { background:radial-gradient(850px 500px at 82% 0%,#dbeaff,transparent 65%),linear-gradient(145deg,#f4f8ff,#e9f0fb); }
+        body.light-mode .flash-login-card { color:#20334f; border-color:rgba(119,148,190,.22); background:rgba(255,255,255,.7); box-shadow:0 28px 90px rgba(49,76,119,.16); }
+        body.light-mode .flash-login-card p { color:#617590; }
+        body.light-mode .flash-login-card label { color:#344b6b; }
+        body.light-mode .flash-login-card input { color:#233956; border-color:rgba(106,136,178,.32); background:rgba(255,255,255,.78); }
+        body.light-mode .flash-login-footnote { color:#71839e !important; }
+        @media (max-width: 767px) {
+            #headerProfile { display:flex; align-items:center; justify-content:center; flex:none; width:38px; height:38px; margin-right:9px; padding:0; border:1px solid rgba(255,255,255,.16); border-radius:50%; background:rgba(255,255,255,.06); color:#eef4ff; cursor:pointer; }
+            #headerProfile .flash-avatar { width:30px; height:30px; }
+            #desktopSidebar .flash-profile { display:none; }
+            #headerBrand { gap:8px; }
+            #headerBrand > div:first-child { width:34px; height:34px; }
+            #headerBrand span.text-lg { font-size:15px; }
+        }
+
+        /* Flash Mentor sidebar layout and optional glass daylight theme */
+        #desktopSidebar { display: none; }
+        .sidebar-brand { display:flex; width:100%; align-items:center; gap:12px; padding:8px 10px 28px; text-align:left; background:none; border:0; color:#f8fbff; cursor:pointer; }
+        .sidebar-mark { display:grid; place-items:center; flex:none; width:42px; height:42px; border-radius:14px; color:#081326; font-size:22px; background:linear-gradient(135deg,#4cc9f0,#2ec4b6 52%,#4361ee); box-shadow:0 8px 25px #4361ee55; }
+        .sidebar-brand strong { display:block; font-size:16px; line-height:1.3; font-weight:800; letter-spacing:-.3px; }
+        .sidebar-brand small { display:block; margin-top:4px; color:#91a6c4; font-size:9px; font-weight:700; letter-spacing:1.1px; }
+        .sidebar-section-label { padding:4px 12px 9px; color:#768aa9; font-size:9px; font-weight:800; letter-spacing:1.5px; }
+        .sidebar-nav { display:flex; flex-direction:column; gap:5px; }
+        .sidebar-nav .nav-btn { display:flex; width:100%; align-items:center; gap:12px; padding:11px 12px; border:1px solid transparent; border-radius:11px; background:transparent; color:#a8b7ce; text-align:left; font-size:13px; font-weight:600; transition:background .18s,border-color .18s,color .18s,transform .18s; }
+        .sidebar-nav .nav-btn span:first-child { width:21px; text-align:center; }
+        .sidebar-nav .nav-btn:hover { background:#1c2541; color:#fff; transform:translateX(2px); }
+        .sidebar-footer { display:flex; align-items:center; gap:10px; margin-top:auto; padding:14px 11px; border-top:1px solid #ffffff16; color:#c8d4e5; font-size:11px; line-height:1.55; }
+        .sidebar-footer-mark { color:#4cc9f0; font-size:18px; }
+        .sidebar-footer small { color:#8294ae; font-size:10px; }
+        @media (min-width: 768px) {
+            #desktopSidebar { display:flex; position:fixed; z-index:50; inset:0 auto 0 0; width:250px; flex-direction:column; padding:22px 15px 16px; border-right:1px solid #ffffff12; background:linear-gradient(180deg,#101a2c 0%,#0b1322 100%); }
+            body > header { position:fixed !important; z-index:40; top:0; left:250px; right:0; height:64px; border-left:0; }
+            body > header > .max-w-7xl { width:100%; max-width:none; margin:0; }
+            body > header .flex.items-center.justify-between.h-16 { justify-content:flex-end; }
+            #headerBrand { display:none; }
+            #mainContent { width:calc(100% - 250px); max-width:none; margin:64px 0 0 250px; }
+        }
+        @media (max-width: 767px) {
+            #headerBrand { display:flex; }
+            #mainContent { width:100%; margin:0; }
+            body > header { position:sticky !important; }
+        }
+        body.light-mode { background:radial-gradient(1000px 540px at 76% -10%,#d9eaff 0%,transparent 68%),linear-gradient(145deg,#f4f8ff,#eaf1fb 70%,#f6faff) !important; color:#1d2b43 !important; }
+        .light-mode .glass-panel { background:rgba(255,255,255,.68) !important; border-color:rgba(133,157,190,.28) !important; box-shadow:0 16px 44px rgba(68,94,133,.10); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); }
+        .light-mode body > header, body.light-mode > header { background:rgba(246,250,255,.78) !important; border-color:rgba(133,157,190,.25) !important; box-shadow:0 8px 26px rgba(62,88,127,.08); backdrop-filter:blur(18px); }
+        body.light-mode #desktopSidebar { background:linear-gradient(180deg,rgba(255,255,255,.88),rgba(239,246,255,.94)); border-color:rgba(133,157,190,.25); box-shadow:8px 0 32px rgba(58,85,125,.06); }
+        body.light-mode .sidebar-brand { color:#15243d; }
+        body.light-mode .sidebar-brand small, body.light-mode .sidebar-section-label, body.light-mode .sidebar-footer small { color:#687b97; }
+        body.light-mode .sidebar-nav .nav-btn { color:#51627c; }
+        body.light-mode .sidebar-nav .nav-btn:hover { background:rgba(72,116,190,.10); color:#20395f; }
+        body.light-mode .sidebar-nav .nav-btn[class~="bg-royal/20"] { background:rgba(67,97,238,.13) !important; color:#3156ce !important; border-color:rgba(67,97,238,.22) !important; }
+        body.light-mode .sidebar-footer { border-color:rgba(83,111,153,.17); color:#344763; }
+        .light-mode .bg-navy-900 { background-color:rgba(242,247,253,.88) !important; }
+        .light-mode .bg-navy-800 { background-color:rgba(227,236,248,.88) !important; }
+        .light-mode .bg-navy-700 { background-color:rgba(215,228,245,.92) !important; }
+        .light-mode .bg-navy-950 { background-color:rgba(233,241,251,.92) !important; }
+        .light-mode .text-white { color:#1b2b44 !important; }
+        .light-mode .text-slate-100, .light-mode .text-slate-200 { color:#273a56 !important; }
+        .light-mode .text-slate-300 { color:#425672 !important; }
+        .light-mode .text-slate-400, .light-mode .text-slate-500 { color:#647894 !important; }
+        .light-mode .text-electric { color:#087e9d !important; }
+        .light-mode .text-teal { color:#087f75 !important; }
+        .light-mode .text-amber { color:#a95000 !important; }
+        .light-mode .border-slate-800, .light-mode .border-slate-800/80, .light-mode .border-slate-700 { border-color:rgba(113,139,176,.25) !important; }
+        .light-mode .bg-gradient-to-br { background-image:linear-gradient(135deg,rgba(255,255,255,.96),rgba(236,244,255,.95) 58%,rgba(220,240,249,.94)) !important; }
+        .light-mode input:not([type="checkbox"]), .light-mode textarea, .light-mode select { color:#243853 !important; background-color:rgba(250,252,255,.84) !important; border-color:rgba(113,139,176,.35) !important; }
+        .light-mode input::placeholder, .light-mode textarea::placeholder { color:#7d8fa9 !important; }
+        .light-mode option { color:#243853; background:#f8fbff; }
+        @media (prefers-reduced-motion: reduce) { .sidebar-nav .nav-btn { transition:none; } }
+    </style>
+    <style>
+        .fm-auth-screen{position:fixed;inset:0;z-index:1000;display:none;place-items:center;overflow:auto;padding:24px;background:radial-gradient(850px 500px at 10% 10%,#1d3960 0%,transparent 65%),radial-gradient(700px 500px at 95% 95%,#113b42 0%,transparent 62%),#07101e}
+        .fm-auth-shell{display:grid;grid-template-columns:1.05fr .8fr;width:min(1050px,100%);min-height:min(660px,calc(100vh - 48px));overflow:hidden;border:1px solid #b8cdee26;border-radius:27px;background:#111d30e8;box-shadow:0 34px 110px #0007;backdrop-filter:blur(22px)}
+        .fm-auth-main{display:flex;flex-direction:column;padding:clamp(26px,5vw,56px)}.fm-auth-brand{display:flex;align-items:center;gap:12px;color:#eff6ff}.fm-auth-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;color:#081326;font-size:21px;background:linear-gradient(135deg,#4cc9f0,#2ec4b6 55%,#7892ff);box-shadow:0 8px 24px #4361ee55}.fm-auth-brand strong{display:block;font-size:15px;font-weight:800}.fm-auth-brand small{display:block;margin-top:2px;color:#8da3c1;font-size:9px;font-weight:800;letter-spacing:1.2px}
+        .fm-auth-form-wrap{width:min(100%,410px);margin:auto;padding:40px 0 26px}.fm-auth-eyebrow{margin-bottom:11px;color:#54d4c4;font-size:10px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase}.fm-auth-form-wrap h1{margin:0;color:#f3f7ff;font-size:clamp(28px,4vw,38px);font-weight:800;letter-spacing:-1.2px;line-height:1.15}.fm-auth-form-wrap>p{margin:12px 0 22px;color:#9aabc3;font-size:13px;line-height:1.7}
+        .fm-auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:20px;padding:4px;border:1px solid #98b1d324;border-radius:12px;background:#040c177a}.fm-auth-tab{padding:10px;border:0;border-radius:9px;background:transparent;color:#92a4bf;font-size:12px;font-weight:700;cursor:pointer}.fm-auth-tab[aria-selected=true]{background:#4cc9f024;color:#a9f2ff;box-shadow:inset 0 0 0 1px #4cc9f030}
+        .fm-auth-field{margin-top:14px}.fm-auth-field label{display:block;margin-bottom:7px;color:#d5e0f0;font-size:11px;font-weight:700}.fm-auth-field input{width:100%;height:48px;padding:0 13px;border:1px solid #99b1d33d;border-radius:11px;outline:0;color:#f2f6fc;background:#050d18a6;font:500 13px 'Plus Jakarta Sans',sans-serif}.fm-auth-field input:focus{border-color:#4cc9f0;box-shadow:0 0 0 3px #4cc9f026}.fm-auth-field input[readonly]{color:#94a7c0}.fm-auth-pass{position:relative}.fm-auth-pass input{padding-right:58px}.fm-auth-reveal{position:absolute;top:50%;right:10px;transform:translateY(-50%);padding:6px;border:0;background:none;color:#89a0bf;font-size:10px;font-weight:700;cursor:pointer}
+        .fm-auth-submit{display:flex;width:100%;justify-content:center;gap:9px;margin-top:21px;padding:14px;border:0;border-radius:12px;color:#071521;background:linear-gradient(105deg,#4cc9f0,#55d5bb);box-shadow:0 11px 28px #2ec4b622;font-size:12px;font-weight:800;cursor:pointer;transition:transform .18s,filter .18s}.fm-auth-submit:hover{transform:translateY(-1px);filter:brightness(1.06)}.fm-auth-submit:disabled{opacity:.7;cursor:wait}.fm-auth-message{min-height:20px;margin:11px 0 0;color:#ffb4ab;font-size:11px;line-height:1.5}.fm-auth-switch{margin:9px 0 0;color:#9aabc3;text-align:center;font-size:11px}.fm-auth-switch button{padding:0;border:0;background:none;color:#74dcf1;font:inherit;font-weight:800;text-decoration:underline;text-underline-offset:3px;cursor:pointer}.fm-auth-note{display:flex;gap:9px;margin:15px 0 0;padding:11px;border:1px solid #92aacd22;border-radius:10px;background:#ffffff08;color:#8295af;font-size:10px;line-height:1.55}.fm-auth-note span:first-child{color:#5fd5c2}
+        .fm-auth-visual{position:relative;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;padding:clamp(28px,4vw,46px);border-left:1px solid #a7bfe226;background:radial-gradient(470px 340px at 70% 4%,#4cc9f03d,transparent 65%),linear-gradient(150deg,#162945e6,#0d1d32f5)}.fm-auth-pill{display:inline-flex;gap:7px;padding:7px 10px;border:1px solid #58d5cf40;border-radius:999px;background:#1cb5af1a;color:#8de4d9;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase}.fm-auth-visual h2{max-width:390px;margin:24px 0 12px;color:#f4f8ff;font-size:clamp(29px,3.3vw,43px);font-weight:800;letter-spacing:-1.4px;line-height:1.12}.fm-auth-visual p{max-width:390px;margin:0;color:#a0b3ce;font-size:13px;line-height:1.75}.fm-auth-journey{display:grid;gap:10px;margin:30px 0}.fm-auth-step{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #adc5e41a;border-radius:13px;background:#0a13225c}.fm-auth-step b{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:9px;background:#4cc9f01f;color:#7de2f0;font-size:10px}.fm-auth-step strong{display:block;color:#e4ecf8;font-size:11px}.fm-auth-step small{display:block;margin-top:3px;color:#849ab7;font-size:9px}.fm-auth-footer{color:#91a6c3;font-size:10px}
+        body.light-mode .fm-auth-screen{background:radial-gradient(850px 500px at 10% 10%,#dbeaff 0%,transparent 65%),linear-gradient(145deg,#f2f7ff,#e7effa)}body.light-mode .fm-auth-shell{border-color:#7794be3b;background:#ffffffba;box-shadow:0 34px 100px #3851782e}body.light-mode .fm-auth-brand,body.light-mode .fm-auth-form-wrap h1{color:#1d2d47}body.light-mode .fm-auth-brand small,body.light-mode .fm-auth-form-wrap>p{color:#677c99}body.light-mode .fm-auth-tabs{border-color:#6481ab2b;background:#e5edf8a1}body.light-mode .fm-auth-tab{color:#61738d}body.light-mode .fm-auth-tab[aria-selected=true]{background:#1b97b21f;color:#087c98}body.light-mode .fm-auth-field label{color:#344b6b}body.light-mode .fm-auth-field input{color:#233956;border-color:#6a88b252;background:#ffffffc7}body.light-mode .fm-auth-note{color:#687c98;background:#fff6}body.light-mode .fm-auth-switch{color:#677c99}body.light-mode .fm-auth-visual{border-color:#718bb030;background:radial-gradient(500px 360px at 70% 3%,#4cc9f040,transparent 65%),linear-gradient(150deg,#e1effdf7,#d4e8f8fa)}body.light-mode .fm-auth-visual h2{color:#1c3151}body.light-mode .fm-auth-visual p,body.light-mode .fm-auth-footer{color:#526984}body.light-mode .fm-auth-step{border-color:#6e8cb32e;background:#ffffff8c}body.light-mode .fm-auth-step strong{color:#263b58}body.light-mode .fm-auth-step small{color:#637995}
+        @media(max-width:760px){.fm-auth-screen{place-items:start center}.fm-auth-shell{grid-template-columns:1fr;min-height:auto;margin:auto}.fm-auth-main{padding:25px clamp(22px,6vw,36px)}.fm-auth-form-wrap{margin:32px auto 18px;padding:0}.fm-auth-visual{min-height:260px;border-top:1px solid #a7bfe226;border-left:0;padding:25px}.fm-auth-visual h2{margin-top:18px;font-size:28px}.fm-auth-journey{grid-template-columns:repeat(3,minmax(0,1fr));margin:20px 0}.fm-auth-step{align-items:flex-start;gap:8px;padding:9px}.fm-auth-step small{display:none}.fm-auth-step b{width:25px;height:25px}}@media(max-width:430px){.fm-auth-journey{grid-template-columns:1fr 1fr}.fm-auth-step:last-child{display:none}}@media(prefers-reduced-motion:reduce){.fm-auth-submit{transition:none}.fm-auth-submit:hover{transform:none}}
+    </style>
+</head>
+<body class="bg-navy-900 text-slate-100 font-sans min-h-screen flex flex-col selection:bg-electric selection:text-navy-900">
+
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <button id="headerProfile" onclick="openFlashMentorProfile()" aria-label="Open local profile"><span class="flash-avatar" id="headerProfileAvatar">L</span></button>
+                <!-- Compact brand shown in the mobile header -->
+                <div id="headerBrand" class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('dashboard')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-royal via-teal to-electric p-0.5 shadow-lg shadow-royal/20">
+                        <div class="w-full h-full bg-navy-900 rounded-[10px] flex items-center justify-center">
+                            <svg class="w-6 h-6 text-electric" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold bg-gradient-to-r from-electric via-teal to-royal bg-clip-text text-transparent">
+                            Flash Mentor
+                        </span>
+                        <span class="text-xs px-2 py-0.5 ml-1.5 rounded-full bg-royal/20 text-electric border border-royal/30 font-semibold tracking-wider uppercase">
+                            AI Automation
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Quick Stats & Sound Toggle -->
+                <div class="flex items-center space-x-3">
+                    <button id="themeToggleBtn" onclick="toggleFlashMentorTheme()" aria-label="Switch to light mode" aria-pressed="false" title="Switch to light mode" class="p-2 rounded-lg bg-navy-800 hover:bg-navy-700 text-slate-300 transition border border-slate-700/50">
+                        <span id="themeIcon" aria-hidden="true">☀️</span>
+                    </button>
+                    <button id="soundToggleBtn" onclick="toggleSound()" class="p-2 rounded-lg bg-navy-800 hover:bg-navy-700 text-slate-300 transition border border-slate-700/50" title="Toggle Audio Effects">
+                        <span id="soundIcon">🔇</span>
+                    </button>
+                    
+                    <div class="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-navy-800/80 border border-amber/30 text-amber font-semibold text-xs shadow-inner">
+                        <span class="animate-bounce">🔥</span>
+                        <span id="headerStreak">0 Day Streak</span>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-navy-800 text-slate-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-slate-800 bg-navy-900/95 px-4 py-3 space-y-2">
+            <button onclick="navigateTo('dashboard'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-navy-800">📊 Dashboard</button>
+            <button onclick="navigateTo('roadmap'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-navy-800">🗺️ Roadmap</button>
+            <button onclick="navigateTo('guides'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-navy-800">📚 Topic Guides</button>
+            <button onclick="navigateTo('tracker'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-navy-800">⏱️ Tracker & Timer</button>
+            <button onclick="navigateTo('projects'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-navy-800">🛠️ Projects</button>
+            <button onclick="navigateTo('achievements'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-navy-800">🏆 Stats & Badges</button>
+            <button onclick="navigateTo('settings'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-sm font-medium hover:bg-navy-800">⚙️ Settings</button>
+        </div>
+    </header>
+
+    <aside id="desktopSidebar" aria-label="Primary navigation">
+        <button id="sidebarProfile" class="flash-profile" onclick="openFlashMentorProfile()" aria-label="Manage local profile">
+            <span class="flash-avatar" id="sidebarProfileAvatar">L</span>
+            <span class="flash-profile-copy"><strong id="sidebarProfileName">Learner</strong><small>Local learning profile · Manage</small></span>
+            <span aria-hidden="true">⌄</span>
+        </button>
+        <button class="sidebar-brand" onclick="navigateTo('dashboard')" aria-label="Flash Mentor home">
+            <span class="sidebar-mark" aria-hidden="true">⚡</span>
+            <span><strong>Flash Mentor</strong><small>AI AUTOMATION ROADMAP</small></span>
+        </button>
+        <div class="sidebar-section-label">YOUR WORKSPACE</div>
+        <nav class="sidebar-nav" aria-label="Main menu">
+            <button onclick="navigateTo('dashboard')" id="nav-dashboard" class="nav-btn"><span>📊</span><span>Dashboard</span></button>
+            <button onclick="navigateTo('roadmap')" id="nav-roadmap" class="nav-btn"><span>🗺️</span><span>Roadmap</span></button>
+            <button onclick="navigateTo('guides')" id="nav-guides" class="nav-btn"><span>📚</span><span>Topic Guides</span></button>
+            <button onclick="navigateTo('tracker')" id="nav-tracker" class="nav-btn"><span>⏱️</span><span>Tracker</span></button>
+            <button onclick="navigateTo('projects')" id="nav-projects" class="nav-btn"><span>🛠️</span><span>Projects</span></button>
+            <button onclick="navigateTo('achievements')" id="nav-achievements" class="nav-btn"><span>🏆</span><span>Stats & Badges</span></button>
+            <button onclick="navigateTo('settings')" id="nav-settings" class="nav-btn"><span>⚙️</span><span>Settings</span></button>
+        </nav>
+        <div class="sidebar-footer"><span class="sidebar-footer-mark">✦</span><span>Learn at your pace.<br><small>Your progress stays on this device.</small></span></div>
+    </aside>
+
+    <main id="mainContent" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ==================== PAGE 1: OVERVIEW DASHBOARD ==================== -->
+        <section id="page-dashboard" class="page-view space-y-8">
+            <!-- Hero Welcome Banner -->
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-navy-800 via-navy-700 to-royal/20 p-6 sm:p-8 border border-slate-700/60 shadow-xl">
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-royal/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                    <div>
+                        <div class="flex items-center space-x-2 text-electric text-sm font-semibold tracking-wide uppercase mb-2">
+                            <span>🚀 Your Learning Journey</span>
+                        </div>
+                        <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                            Mastering AI Automation
+                        </h1>
+                        <p class="mt-2 text-slate-300 max-w-2xl text-sm sm:text-base leading-relaxed">
+                            Transform from foundational API concepts to autonomous multi-agent pipelines with hands-on practice.
+                        </p>
+                    </div>
+                    <div class="flex-shrink-0 flex items-center gap-3">
+                        <button onclick="resumeLearning()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-royal to-electric hover:from-royal/90 hover:to-electric/90 text-navy-900 font-bold shadow-lg shadow-electric/20 hover:shadow-electric/40 transition transform active:scale-95 flex items-center space-x-2">
+                            <span>⚡ Pick Up Where You Left Off</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Metrics Overview Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Roadmap Level -->
+                <div class="glass-panel p-5 rounded-xl border border-slate-800 hover:border-royal/50 transition">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Current Level</span>
+                        <span class="text-xl">🎯</span>
+                    </div>
+                    <div class="mt-3">
+                        <div id="dash-level-title" class="text-lg font-bold text-electric">Level 1: Foundations</div>
+                        <p id="dash-level-sub" class="text-xs text-slate-400 mt-1">0 of 4 topics completed</p>
+                    </div>
+                </div>
+
+                <!-- Completion Progress -->
+                <div class="glass-panel p-5 rounded-xl border border-slate-800 hover:border-teal/50 transition">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Overall Progress</span>
+                        <span id="dash-progress-pct" class="text-sm font-bold text-teal">0%</span>
+                    </div>
+                    <div class="mt-3">
+                        <div class="w-full bg-navy-900 h-2.5 rounded-full overflow-hidden border border-slate-700">
+                            <div id="dash-progress-bar" class="bg-gradient-to-r from-teal to-electric h-full w-0 transition-all duration-500"></div>
+                        </div>
+                        <p id="dash-progress-count" class="text-xs text-slate-400 mt-2">0 / 20 Roadmap Topics Done</p>
+                    </div>
+                </div>
+
+                <!-- Streak Counter -->
+                <div class="glass-panel p-5 rounded-xl border border-slate-800 hover:border-amber/50 transition">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Daily Streak</span>
+                        <span class="text-xl">🔥</span>
+                    </div>
+                    <div class="mt-3">
+                        <div id="dash-streak-days" class="text-2xl font-black text-amber">0 Days</div>
+                        <p class="text-xs text-slate-400 mt-1">Keep learning daily to grow</p>
+                    </div>
+                </div>
+
+                <!-- Total Hours -->
+                <div class="glass-panel p-5 rounded-xl border border-slate-800 hover:border-coral/50 transition">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Learning Time</span>
+                        <span class="text-xl">⏱️</span>
+                    </div>
+                    <div class="mt-3">
+                        <div id="dash-total-time" class="text-2xl font-black text-white">0h 0m</div>
+                        <p class="text-xs text-slate-400 mt-1">Total focus timer hours logged</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Charts & Next Step Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Weekly Activity Visual Canvas Chart -->
+                <div class="lg:col-span-2 glass-panel p-6 rounded-2xl border border-slate-800">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h2 class="text-lg font-bold text-white">Weekly Learning Velocity</h2>
+                            <p class="text-xs text-slate-400">Minutes spent studying over the past 7 days</p>
+                        </div>
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-royal/20 text-electric border border-royal/30">
+                            Last 7 Days
+                        </span>
+                    </div>
+                    <div class="relative h-60 w-full">
+                        <canvas id="weeklyActivityCanvas" class="w-full h-full"></canvas>
+                    </div>
+                </div>
+
+                <!-- Next Recommended Step & Today Target -->
+                <div class="space-y-6">
+                    <!-- Today's Target Widget -->
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800">
+                        <h2 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+                            <span>🎯</span><span>Today's Target</span>
+                        </h2>
+                        <div id="todayTargetWidget" class="space-y-3">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Recommended Next Topic Card -->
+                    <div class="glass-panel p-6 rounded-2xl border border-royal/40 bg-gradient-to-b from-navy-800 to-navy-900">
+                        <div class="flex items-center justify-between text-xs text-electric font-semibold uppercase tracking-wider mb-2">
+                            <span>Recommended Topic</span>
+                            <span class="px-2 py-0.5 rounded bg-royal/30 text-white">Next Step</span>
+                        </div>
+                        <h3 id="dash-next-title" class="text-lg font-bold text-white mb-2">Loading next topic...</h3>
+                        <p id="dash-next-desc" class="text-xs text-slate-300 line-clamp-2 mb-4">Select a topic from the roadmap to get started.</p>
+                        <button id="dash-next-btn" onclick="openTopicGuide('topic-api-basics')" class="w-full py-2.5 rounded-xl bg-royal hover:bg-royal/80 text-white font-semibold text-sm transition flex items-center justify-center space-x-2">
+                            <span>Start Study Guide</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== PAGE 2: AI AUTOMATION ROADMAP ==================== -->
+        <section id="page-roadmap" class="page-view hidden space-y-8">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-6">
+                <div>
+                    <h1 class="text-3xl font-extrabold text-white tracking-tight">AI Automation Curriculum</h1>
+                    <p class="text-slate-400 text-sm mt-1">5 Structured Levels from Foundations to Autonomous Production Agents</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <select id="roadmapFilter" onchange="filterRoadmapTopics()" class="bg-navy-800 border border-slate-700 text-slate-200 text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:border-electric">
+                        <option value="all">All Topics (20)</option>
+                        <option value="not_started">Not Started</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Roadmap Levels Accordion Container -->
+            <div id="roadmapLevelsContainer" class="space-y-8">
+                <!-- Dynamically populated via renderRoadmap() -->
+            </div>
+        </section>
+
+
+        <!-- ==================== PAGE 3: TOPIC GUIDES ==================== -->
+        <section id="page-guides" class="page-view hidden space-y-8">
+            <!-- Topic Selector Header -->
+            <div class="glass-panel p-4 sm:p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="w-full md:w-1/2">
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Select Study Topic Guide</label>
+                    <select id="topicGuideSelect" onchange="loadTopicGuide(this.value)" class="w-full bg-navy-900 border border-slate-700 text-white font-semibold rounded-xl px-4 py-3 focus:outline-none focus:border-electric transition">
+                        <!-- Populated via JS -->
+                    </select>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button id="guideBookmarkBtn" onclick="toggleBookmarkCurrentTopic()" class="px-4 py-2.5 rounded-xl bg-navy-800 hover:bg-navy-700 border border-slate-700 text-xs font-semibold text-slate-300 transition flex items-center space-x-2">
+                        <span id="guideBookmarkIcon">🔖</span>
+                        <span id="guideBookmarkText">Bookmark Guide</span>
+                    </button>
+                    <button id="guideStatusBtn" onclick="toggleCurrentTopicStatus()" class="px-4 py-2.5 rounded-xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold transition flex items-center space-x-2">
+                        <span id="guideStatusIcon">✅</span>
+                        <span id="guideStatusText">Mark Completed</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Topic Content Container -->
+            <div id="topicGuideContent" class="space-y-8">
+                <!-- Populated dynamically by JS -->
+            </div>
+
+            <!-- Prev / Next Navigation Footer -->
+            <div class="flex items-center justify-between border-t border-slate-800 pt-6">
+                <button id="prevTopicBtn" onclick="navigateTopicOffset(-1)" class="px-5 py-2.5 rounded-xl bg-navy-800 hover:bg-navy-700 border border-slate-700 text-sm font-semibold text-slate-300 flex items-center space-x-2">
+                    <span>← Previous Topic</span>
+                </button>
+                <button id="nextTopicBtn" onclick="navigateTopicOffset(1)" class="px-5 py-2.5 rounded-xl bg-royal hover:bg-royal/80 text-white text-sm font-semibold flex items-center space-x-2 shadow-lg shadow-royal/20">
+                    <span>Next Topic →</span>
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ==================== PAGE 4: DAILY TARGETS & TRACKER ==================== -->
+        <section id="page-tracker" class="page-view hidden space-y-8">
+            <div class="border-b border-slate-800 pb-6">
+                <h1 class="text-3xl font-extrabold text-white tracking-tight">Daily Targets & Focus Tracker</h1>
+                <p class="text-slate-400 text-sm mt-1">Organize your daily study sessions, run focus timers, and log activities</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Pomodoro / Focus Timer Card -->
+                <div class="glass-panel p-6 sm:p-8 rounded-2xl border border-slate-800 text-center flex flex-col items-center justify-between">
+                    <div class="w-full">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-royal/20 text-electric text-xs font-semibold border border-royal/30 mb-4">
+                            <span>⏱️ AI Study Timer</span>
+                        </div>
+                        <h2 class="text-xl font-bold text-white">Pomodoro Focus Session</h2>
+                    </div>
+
+                    <!-- Timer Circle & Display -->
+                    <div class="my-8 relative flex items-center justify-center">
+                        <div class="w-48 h-48 sm:w-56 sm:h-56 rounded-full border-8 border-navy-800 flex items-center justify-center shadow-inner relative">
+                            <svg class="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="#1C2541" stroke-width="8" />
+                                <circle id="timerCircleProgress" cx="50" cy="50" r="42" fill="none" stroke="#4CC9F0" stroke-width="8" stroke-dasharray="263.89" stroke-dashoffset="0" stroke-linecap="round" class="transition-all duration-1000"/>
+                            </svg>
+                            <div class="text-center z-10">
+                                <span id="timerDisplay" class="text-4xl sm:text-5xl font-black font-mono tracking-tight text-white">25:00</span>
+                                <p id="timerLabel" class="text-xs text-slate-400 mt-1 uppercase tracking-widest">Focus Mode</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timer Controls -->
+                    <div class="w-full space-y-3">
+                        <div class="flex items-center justify-center space-x-3">
+                            <button id="timerToggleBtn" onclick="togglePomodoroTimer()" class="flex-1 py-3 px-6 rounded-xl bg-gradient-to-r from-teal to-electric text-navy-900 font-bold text-sm shadow-lg shadow-electric/20 hover:opacity-90 transition">
+                                Start Session
+                            </button>
+                            <button onclick="resetPomodoroTimer()" class="py-3 px-4 rounded-xl bg-navy-800 hover:bg-navy-700 border border-slate-700 text-slate-300 font-semibold text-sm transition">
+                                ↺
+                            </button>
+                        </div>
+                        <div class="flex justify-center space-x-2 text-xs">
+                            <button onclick="setTimerPreset(25)" class="px-2.5 py-1 rounded bg-navy-800 hover:bg-navy-700 border border-slate-700 text-slate-300">25m Focus</button>
+                            <button onclick="setTimerPreset(5)" class="px-2.5 py-1 rounded bg-navy-800 hover:bg-navy-700 border border-slate-700 text-slate-300">5m Break</button>
+                            <button onclick="setTimerPreset(50)" class="px-2.5 py-1 rounded bg-navy-800 hover:bg-navy-700 border border-slate-700 text-slate-300">50m Deep</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Tasks & Checklist -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h2 class="text-lg font-bold text-white">Today's Learning Tasks</h2>
+                                <p class="text-xs text-slate-400">Add custom tasks or auto-reschedule unfinished ones</p>
+                            </div>
+                            <span id="taskCompletionCount" class="text-xs font-semibold px-2.5 py-1 rounded-md bg-amber/20 text-amber border border-amber/30">
+                                0/0 Done
+                            </span>
+                        </div>
+
+                        <!-- Add Task Input -->
+                        <form onsubmit="addNewDailyTask(event)" class="flex gap-2">
+                            <input type="text" id="newTaskInput" placeholder="Add a new daily learning task..." required class="flex-1 bg-navy-900 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-electric">
+                            <button type="submit" class="px-5 py-2.5 rounded-xl bg-royal hover:bg-royal/80 text-white font-semibold text-sm transition">
+                                Add
+                            </button>
+                        </form>
+
+                        <!-- Task List -->
+                        <div id="dailyTasksList" class="space-y-2.5 pt-2">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Activity Heatgrid / Calendar Log -->
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800">
+                        <h2 class="text-base font-bold text-white mb-3">Activity History (Last 28 Days)</h2>
+                        <div id="activityHeatmapGrid" class="grid grid-cols-7 gap-2 pt-2">
+                            <!-- Heatgrid boxes populated via JS -->
+                        </div>
+                        <div class="flex items-center justify-between mt-4 text-xs text-slate-400">
+                            <span>Less active</span>
+                            <div class="flex gap-1.5">
+                                <div class="w-3 h-3 rounded bg-navy-800"></div>
+                                <div class="w-3 h-3 rounded bg-teal/30"></div>
+                                <div class="w-3 h-3 rounded bg-teal/60"></div>
+                                <div class="w-3 h-3 rounded bg-teal"></div>
+                            </div>
+                            <span>More active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== PAGE 5: PROJECTS & PORTFOLIO ==================== -->
+        <section id="page-projects" class="page-view hidden space-y-8">
+            <div class="border-b border-slate-800 pb-6">
+                <h1 class="text-3xl font-extrabold text-white tracking-tight">Practical AI Projects & Portfolio</h1>
+                <p class="text-slate-400 text-sm mt-1">Apply your knowledge with real-world automation builds and record project reflections</p>
+            </div>
+
+            <!-- Projects Grid -->
+            <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </section>
+
+
+        <!-- ==================== PAGE 6: STATISTICS & ACHIEVEMENTS ==================== -->
+        <section id="page-achievements" class="page-view hidden space-y-8">
+            <div class="border-b border-slate-800 pb-6">
+                <h1 class="text-3xl font-extrabold text-white tracking-tight">Statistics & Gamified Badges</h1>
+                <p class="text-slate-400 text-sm mt-1">Track your breakdown across domains and unlock milestone achievements</p>
+            </div>
+
+            <!-- Topic Category Breakdown Visuals -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800">
+                    <h2 class="text-lg font-bold text-white mb-4">Domain Progress Distribution</h2>
+                    <div class="relative h-64 w-full">
+                        <canvas id="categoryDistributionCanvas" class="w-full h-full"></canvas>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-white">Velocity & Milestones</h2>
+                    <div class="space-y-3">
+                        <div class="p-4 rounded-xl bg-navy-900 border border-slate-800 flex items-center justify-between">
+                            <span class="text-slate-300 text-sm">Completed Projects</span>
+                            <span id="statsCompletedProjects" class="text-lg font-bold text-electric">0 / 4</span>
+                        </div>
+                        <div class="p-4 rounded-xl bg-navy-900 border border-slate-800 flex items-center justify-between">
+                            <span class="text-slate-300 text-sm">Target Daily Rate</span>
+                            <span id="statsDailyRate" class="text-lg font-bold text-amber">100%</span>
+                        </div>
+                        <div class="p-4 rounded-xl bg-navy-900 border border-slate-800 flex items-center justify-between">
+                            <span class="text-slate-300 text-sm">Badges Unlocked</span>
+                            <span id="statsBadgeCount" class="text-lg font-bold text-teal">0 / 8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Badges Gallery -->
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-6">
+                <div>
+                    <h2 class="text-xl font-bold text-white">Milestone Badges</h2>
+                    <p class="text-xs text-slate-400">Complete topics and maintain daily streaks to earn unique badges</p>
+                </div>
+
+                <div id="badgesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <!-- Dynamically populated via JS -->
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== PAGE 7: SETTINGS & PERSONALIZATION ==================== -->
+        <section id="page-settings" class="page-view hidden space-y-8">
+            <div class="border-b border-slate-800 pb-6">
+                <h1 class="text-3xl font-extrabold text-white tracking-tight">Settings & Personalization</h1>
+                <p class="text-slate-400 text-sm mt-1">Customize learning targets, themes, audio settings, and manage data</p>
+            </div>
+
+            <div class="max-w-3xl space-y-8">
+                <!-- Learning Targets Settings -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <span>🎯</span><span>Target Customization</span>
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-2">Daily Study Goal (Minutes)</label>
+                            <input type="number" id="settingDailyGoal" min="10" max="300" step="5" value="45" onchange="updateSettings()" class="w-full bg-navy-900 border border-slate-700 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-electric">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-2">Preferred Pace</label>
+                            <select id="settingPace" onchange="updateSettings()" class="w-full bg-navy-900 border border-slate-700 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-electric">
+                                <option value="casual">Casual (2 Topics / week)</option>
+                                <option value="standard" selected>Standard (4 Topics / week)</option>
+                                <option value="intensive">Intensive (7 Topics / week)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audio & UI Preferences -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <span>🔊</span><span>Audio & UI Preferences</span>
+                    </h2>
+                    
+                    <div class="flex items-center justify-between py-2 border-b border-slate-800">
+                        <div>
+                            <div class="text-sm font-semibold text-white">Appearance</div>
+                            <div class="text-xs text-slate-400">Choose midnight dark or glass daylight mode</div>
+                        </div>
+                        <button id="themeSettingsBtn" onclick="toggleFlashMentorTheme()" class="px-3 py-2 rounded-lg bg-navy-800 border border-slate-700 text-xs font-semibold text-slate-200">Switch to light mode</button>
+                    </div>
+                    <div class="flex items-center justify-between py-2 border-b border-slate-800">
+                        <div>
+                            <div class="text-sm font-semibold text-white">Synthesized Audio Effects</div>
+                            <div class="text-xs text-slate-400">Play subtle sound feedback for button clicks & timer chimes</div>
+                        </div>
+                        <input type="checkbox" id="settingSoundToggle" onchange="updateSettings()" class="w-5 h-5 accent-electric cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Data Storage & Management -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <span>💾</span><span>Data Persistence & Sync</span>
+                    </h2>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        All learning progress, notes, tasks, and achievements are saved <strong class="text-electric">locally in your web browser's LocalStorage</strong>. Data remains isolated on this browser unless exported.
+                    </p>
+
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="exportUserData()" class="px-5 py-2.5 rounded-xl bg-navy-800 hover:bg-navy-700 border border-slate-700 text-white text-sm font-semibold transition flex items-center space-x-2">
+                            <span>📥 Export Data (JSON)</span>
+                        </button>
+                        <label class="px-5 py-2.5 rounded-xl bg-navy-800 hover:bg-navy-700 border border-slate-700 text-white text-sm font-semibold transition cursor-pointer flex items-center space-x-2">
+                            <span>📤 Import Data (JSON)</span>
+                            <input type="file" id="importFileInput" accept=".json" onchange="importUserData(event)" class="hidden">
+                        </label>
+                        <button onclick="confirmResetDataModal()" class="px-5 py-2.5 rounded-xl bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 text-sm font-semibold transition">
+                             Reset All Progress
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="resetModal" class="fixed inset-0 z-50 bg-navy-900/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl border border-red-500/30 max-w-md w-full space-y-4 shadow-2xl">
+            <div class="w-12 h-12 rounded-xl bg-red-500/20 text-red-400 flex items-center justify-center text-2xl">
+                ⚠️
+            </div>
+            <h3 class="text-xl font-bold text-white">Reset All Progress?</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+                This action will erase all completed topics, notes, pomodoro timer logs, custom tasks, and unlocked badges. This cannot be undone unless you have a JSON backup.
+            </p>
+            <div class="flex items-center justify-end space-x-3 pt-4">
+                <button onclick="closeResetModal()" class="px-4 py-2 rounded-xl bg-navy-800 hover:bg-navy-700 text-slate-300 text-xs font-semibold">
+                    Cancel
+                </button>
+                <button onclick="executeResetData()" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold">
+                    Confirm Reset
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ==================== GLOBAL APP DATA STRUCTURES ==================== */
+        
+        // Comprehensive Curriculum Topics Dataset
+        const ROADMAP_DATA = [
+            {
+                level: 1,
+                levelTitle: "Level 1: Foundations",
+                levelDesc: "API mechanics, webhooks, Python automation scripts, and structured JSON parsing.",
+                topics: [
+                    {
+                        id: "topic-api-basics",
+                        title: "REST APIs & Webhooks",
+                        estTime: "2 hours",
+                        prereqs: ["Basic HTTP concepts"],
+                        objectives: ["Understand HTTP methods (GET, POST, PUT, DELETE)", "Implement custom Webhook listeners", "Authenticate using Bearer tokens and API Keys"],
+                        outcomes: "Ability to connect external software services using raw API endpoints.",
+                        video: {
+                            title: "REST APIs Explained in 10 Minutes",
+                            channel: "Fireship",
+                            url: "https://www.youtube.com/watch?v=-MTSQjw5DrM"
+                        },
+                        codeSnippet: `// Example Python REST Request
+import requests
+
+response = requests.post(
+    "https://api.openai.com/v1/chat/completions",
+    headers={"Authorization": "Bearer YOUR_API_KEY"},
+    json={"model": "gpt-4o-mini", "messages": [{"role": "user", "content": "Hello AI!"}]}
+)
+print(response.json())`,
+                        checklist: [
+                            "Send a GET request using cURL or Postman",
+                            "Extract JSON fields programmatically",
+                            "Configure a webhook endpoint"
+                        ]
+                    },
+                    {
+                        id: "topic-python-auto",
+                        title: "Python Automation Essentials",
+                        estTime: "3 hours",
+                        prereqs: ["REST APIs & Webhooks"],
+                        objectives: ["Automate local file system operations", "Interact with OS environment variables", "Perform HTTP requests with requests & httpx"],
+                        outcomes: "Create standalone Python automation scripts for routine workflows.",
+                        video: {
+                            title: "Automate the Boring Stuff with Python",
+                            channel: "FreeCodeCamp",
+                            url: "https://www.youtube.com/watch?v=1FGPX931Ogc"
+                        },
+                        codeSnippet: `# Automated JSON file processing
+import json
+
+data = {"status": "success", "items": ["email", "invoice", "report"]}
+with open("output.json", "w") as f:
+    json.dump(data, f, indent=2)`,
+                        checklist: [
+                            "Set up a Python virtual environment",
+                            "Install and import third-party packages",
+                            "Write error handling with try/except blocks"
+                        ]
+                    },
+                    {
+                        id: "topic-json-data",
+                        title: "JSON & Structural Data Parsing",
+                        estTime: "2 hours",
+                        prereqs: ["Python Automation Essentials"],
+                        objectives: ["Parse nested JSON payloads", "Validate schema shapes", "Transform tabular CSV data to JSON"],
+                        outcomes: "Clean and format messy payload data before sending to LLMs.",
+                        video: {
+                            title: "JSON Crash Course",
+                            channel: "Traversy Media",
+                            url: "https://www.youtube.com/watch?v=wI1CWzNtE-M"
+                        },
+                        codeSnippet: `// Transforming nested objects in JavaScript
+const rawPayload = { user: { name: "Alice", details: { score: 95 } } };
+const userScore = rawPayload?.user?.details?.score ?? 0;
+console.log(\`Score: \${userScore}\`);`,
+                        checklist: [
+                            "Parse deeply nested JSON objects",
+                            "Handle missing or null fields gracefully",
+                            "Convert structured data formats"
+                        ]
+                    },
+                    {
+                        id: "topic-prompt-eng-1",
+                        title: "Foundational Prompt Engineering",
+                        estTime: "2.5 hours",
+                        prereqs: ["JSON & Structural Data Parsing"],
+                        objectives: ["Apply System, User, and Assistant prompt roles", "Use Few-Shot prompting techniques", "Enforce strict JSON mode outputs"],
+                        outcomes: "Reliable structured text responses from language models.",
+                        video: {
+                            title: "Prompt Engineering for Developers",
+                            channel: "DeepLearning.AI",
+                            url: "https://www.youtube.com/watch?v=_ZvnD73m40o"
+                        },
+                        codeSnippet: `System: You are an enterprise data extractor. Output ONLY valid JSON matching schema {"name": str, "urgency": "low"|"high"}.
+User: Urgent issue from John regarding payment failure!`,
+                        checklist: [
+                            "Write explicit system instructions",
+                            "Test few-shot prompt examples",
+                            "Enforce structured JSON output"
+                        ]
+                    }
+                ]
+            },
+            {
+                level: 2,
+                levelTitle: "Level 2: No-Code & Low-Code AI Tools",
+                levelDesc: "Visual workflow automation with Make.com, Zapier, and n8n combined with LLM nodes.",
+                topics: [
+                    {
+                        id: "topic-make-zapier",
+                        title: "Make.com & Zapier Integration",
+                        estTime: "3 hours",
+                        prereqs: ["Level 1 Foundations"],
+                        objectives: ["Build multi-step automated triggers and actions", "Integrate OpenAI visual modules", "Handle rate limits and retries visual logic"],
+                        outcomes: "Automated business workflows across Slack, Gmail, and Google Sheets.",
+                        video: {
+                            title: "Make.com Automation Full Tutorial",
+                            channel: "Corey Sprouse",
+                            url: "https://www.youtube.com/watch?v=Jm_24Lp_N3E"
+                        },
+                        codeSnippet: `// Make.com Custom Webhook Data Structure
+{
+  "event": "new_lead",
+  "email": "lead@company.com",
+  "message": "Interested in AI automation pipeline build"
+}`,
+                        checklist: [
+                            "Build a multi-branch Make scenario",
+                            "Connect an OpenAI API completion module",
+                            "Test error handling sub-paths"
+                        ]
+                    },
+                    {
+                        id: "topic-n8n-workflows",
+                        title: "Self-Hosted n8n AI Workflows",
+                        estTime: "4 hours",
+                        prereqs: ["Make.com & Zapier Integration"],
+                        objectives: ["Host n8n using Docker", "Configure native AI Agent nodes", "Manage memory and state in workflows"],
+                        outcomes: "Private, self-hosted enterprise automation without per-run tier costs.",
+                        video: {
+                            title: "n8n AI Agents Crash Course",
+                            channel: "n8n - Workflow Automation",
+                            url: "https://www.youtube.com/watch?v=0h94C6A--g0"
+                        },
+                        codeSnippet: `// Docker Run command for local n8n
+docker run -it --rm --name n8n -p 5678:5678 -v ~/.n8n:/home/node/.n8n n8nio/n8n`,
+                        checklist: [
+                            "Spin up n8n instance via Docker",
+                            "Create an n8n workflow with AI memory",
+                            "Connect a Telegram or Discord bot webhook"
+                        ]
+                    },
+                    {
+                        id: "topic-no-code-database",
+                        title: "Airtable & Notion AI Databases",
+                        estTime: "2 hours",
+                        prereqs: ["Self-Hosted n8n AI Workflows"],
+                        objectives: ["Design relational tables for automation", "Automate database row updates using AI outputs", "Configure Notion API databases"],
+                        outcomes: "Self-updating CRM and Knowledge Repositories.",
+                        video: {
+                            title: "Airtable API & Automation Guide",
+                            channel: "GAP Consulting",
+                            url: "https://www.youtube.com/watch?v=zJ46B_J2R_E"
+                        },
+                        codeSnippet: `// Airtable API patch request body
+{
+  "fields": {
+    "Status": "Processed",
+    "AI Summary": "High priority enterprise lead requiring custom quote."
+  }
+}`,
+                        checklist: [
+                            "Setup Airtable relational base",
+                            "Generate API Personal Access Token",
+                            "Connect database to automated pipeline"
+                        ]
+                    },
+                    {
+                        id: "topic-document-parsing",
+                        title: "OCR & Invoice Document Extraction",
+                        estTime: "3.5 hours",
+                        prereqs: ["Airtable & Notion AI Databases"],
+                        objectives: ["Extract structured data from PDFs using Vision APIs", "Process unstructured invoices automatically", "Validate extracted numbers against business rules"],
+                        outcomes: "Automated document intake system.",
+                        video: {
+                            title: "Extract PDF Data with OpenAI Vision",
+                            channel: "AI Maker Lab",
+                            url: "https://www.youtube.com/watch?v=3R-3-b9_b0c"
+                        },
+                        codeSnippet: `// Vision API payload for invoice parsing
+const payload = {
+  model: "gpt-4o",
+  messages: [{
+    role: "user",
+    content: [
+      { type: "text", text: "Extract total amount, invoice date, and vendor name as JSON." },
+      { type: "image_url", image_url: { url: "https://example.com/invoice.jpg" } }
+    ]
+  }]
+};`,
+                        checklist: [
+                            "Pass invoice image/PDF to Vision model",
+                            "Parse line items into structured JSON",
+                            "Store output in database"
+                        ]
+                    }
+                ]
+            },
+            {
+                level: 3,
+                levelTitle: "Level 3: Custom AI Agents & LLM Integration",
+                levelDesc: "LangChain, OpenAI Function Calling, custom tool binding, and programmatic agent loops.",
+                topics: [
+                    {
+                        id: "topic-openai-api",
+                        title: "OpenAI API & Function Calling",
+                        estTime: "4 hours",
+                        prereqs: ["Level 2 Tools"],
+                        objectives: ["Define strict JSON function schemas", "Handle tool execution loop pattern", "Manage conversation context history"],
+                        outcomes: "Build LLMs that execute backend Python functions automatically.",
+                        video: {
+                            title: "OpenAI Function Calling Masterclass",
+                            channel: "Dave Ebbelaar",
+                            url: "https://www.youtube.com/watch?v=02JmR3-0a7E"
+                        },
+                        codeSnippet: `tools = [{
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "Get current weather for location",
+        "parameters": {
+            "type": "object",
+            "properties": {"location": {"type": "string"}},
+            "required": ["location"]
+        }
+    }
+}]`,
+                        checklist: [
+                            "Define a custom function tool schema",
+                            "Detect when the model emits tool_calls",
+                            "Execute local function and return output to model"
+                        ]
+                    },
+                    {
+                        id: "topic-langchain-basics",
+                        title: "LangChain & LlamaIndex Frameworks",
+                        estTime: "5 hours",
+                        prereqs: ["OpenAI API & Function Calling"],
+                        objectives: ["Build chains with LCEL (LangChain Expression Language)", "Configure memory buffers", "Implement document loaders and splitters"],
+                        outcomes: "Modular, extensible AI applications.",
+                        video: {
+                            title: "LangChain Complete Course for Beginners",
+                            channel: "Alejandro AO - Software & AI",
+                            url: "https://www.youtube.com/watch?v=aywZrzNaKjs"
+                        },
+                        codeSnippet: `from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+
+prompt = ChatPromptTemplate.from_template("Summarize: {text}")
+model = ChatOpenAI(model="gpt-4o-mini")
+chain = prompt | model`,
+                        checklist: [
+                            "Build a simple LCEL chain",
+                            "Load custom text/PDF documents",
+                            "Implement chat context memory"
+                        ]
+                    },
+                    {
+                        id: "topic-custom-tools",
+                        title: "Custom Tool Development for Agents",
+                        estTime: "3.5 hours",
+                        prereqs: ["LangChain & LlamaIndex Frameworks"],
+                        objectives: ["Wrap third-party SDKs as agent tools", "Implement input sanitization", "Build error recovery fallbacks"],
+                        outcomes: "Equip agents with custom web search, database querying, and API capabilities.",
+                        video: {
+                            title: "Building Custom AI Tools",
+                            channel: "Harrison Chase / LangChain",
+                            url: "https://www.youtube.com/watch?v=2c_c1q5_k_M"
+                        },
+                        codeSnippet: `from langchain_core.tools import tool
+
+@tool
+def calculate_tax(amount: float) -> float:
+    """Calculates 20% sales tax for an amount."""
+    return amount * 0.20`,
+                        checklist: [
+                            "Decorate custom Python functions as tools",
+                            "Pass tool arrays to agent initializers",
+                            "Test tool selection accuracy"
+                        ]
+                    },
+                    {
+                        id: "topic-guardrails",
+                        title: "AI Safety, Guardrails & Evaluation",
+                        estTime: "3 hours",
+                        prereqs: ["Custom Tool Development for Agents"],
+                        objectives: ["Validate model outputs using Pydantic", "Implement prompt injection defenses", "Benchmark response accuracy with Ragas"],
+                        outcomes: "Production-grade, safe AI pipeline deployments.",
+                        video: {
+                            title: "Guardrails AI Crash Course",
+                            channel: "AI Engineer",
+                            url: "https://www.youtube.com/watch?v=84_m_zX-s5s"
+                        },
+                        codeSnippet: `from pydantic import BaseModel, Field
+
+class AnalysisOutput(BaseModel):
+    sentiment: str = Field(description="positive, negative, or neutral")
+    confidence: float = Field(ge=0.0, le=1.0)`,
+                        checklist: [
+                            "Enforce Pydantic validation schemas",
+                            "Sanitize user inputs against prompt injection",
+                            "Measure hallucinations using benchmarks"
+                        ]
+                    }
+                ]
+            },
+            {
+                level: 4,
+                levelTitle: "Level 4: Enterprise AI Pipelines",
+                levelDesc: "RAG Architecture, Vector Databases (Pinecone/Chroma), and local offline LLMs with Ollama.",
+                topics: [
+                    {
+                        id: "topic-rag-arch",
+                        title: "RAG Architecture & Vector Embeddings",
+                        estTime: "5 hours",
+                        prereqs: ["Level 3 Custom Agents"],
+                        objectives: ["Generate text embeddings with OpenAI/HuggingFace", "Chunk documents with semantic splitting", "Implement similarity search with cosine distance"],
+                        outcomes: "Question-answering over custom private company knowledge bases.",
+                        video: {
+                            title: "RAG from Scratch Course",
+                            channel: "Lance Martin / LangChain",
+                            url: "https://www.youtube.com/watch?v=wd7TZ4w1mSw"
+                        },
+                        codeSnippet: `from langchain_community.vectorstores import Chroma
+from langchain_openai import OpenAIEmbeddings
+
+vectorstore = Chroma.from_texts(
+    texts=["Document section 1...", "Document section 2..."],
+    embedding=OpenAIEmbeddings()
+)`,
+                        checklist: [
+                            "Chunk text documents effectively",
+                            "Generate vector embeddings",
+                            "Query vector space for relevant contexts"
+                        ]
+                    },
+                    {
+                        id: "topic-vector-dbs",
+                        title: "Vector Databases: Pinecone & Chroma",
+                        estTime: "4 hours",
+                        prereqs: ["RAG Architecture & Vector Embeddings"],
+                        objectives: ["Index millions of vectors in cloud vector stores", "Apply metadata filtering to queries", "Hybrid keyword + semantic vector search"],
+                        outcomes: "Scalable enterprise document search engines.",
+                        video: {
+                            title: "Pinecone Vector Database Tutorial",
+                            channel: "James Briggs",
+                            url: "https://www.youtube.com/watch?v=QdDoFfkVk4w"
+                        },
+                        codeSnippet: `# Pinecone query with metadata filter
+index.query(
+    vector=[0.1, 0.2, 0.3],
+    top_k=5,
+    filter={"category": "financial_reports"}
+)`,
+                        checklist: [
+                            "Set up cloud Pinecone index",
+                            "Attach metadata key-values to embeddings",
+                            "Execute hybrid similarity search"
+                        ]
+                    },
+                    {
+                        id: "topic-local-llms",
+                        title: "Local LLMs with Ollama & vLLM",
+                        estTime: "4.5 hours",
+                        prereqs: ["Vector Databases: Pinecone & Chroma"],
+                        objectives: ["Deploy Llama 3 / Mistral locally with Ollama", "Optimize throughput using vLLM", "Configure OpenAI-compatible local servers"],
+                        outcomes: "100% private, zero data-leakage offline AI pipelines.",
+                        video: {
+                            title: "Run LLMs Locally with Ollama",
+                            channel: "Matt Williams",
+                            url: "https://www.youtube.com/watch?v=oxA_2s-b-1g"
+                        },
+                        codeSnippet: `// Terminal command to launch local Llama 3
+ollama run llama3:8b`,
+                        checklist: [
+                            "Install and run Ollama CLI",
+                            "Pull open-weights LLMs",
+                            "Connect LangChain/Python to http://localhost:11434"
+                        ]
+                    },
+                    {
+                        id: "topic-advanced-rag",
+                        title: "Advanced RAG: Re-ranking & Parent Document Retrieval",
+                        estTime: "4 hours",
+                        prereqs: ["Local LLMs with Ollama & vLLM"],
+                        objectives: ["Implement Cohere Rerank model", "Multi-query expansion", "Parent-child chunk retrieval architectures"],
+                        outcomes: "Precision RAG retrieval with < 2% hallucination rates.",
+                        video: {
+                            title: "Advanced RAG Techniques",
+                            channel: "Aakash Gupta",
+                            url: "https://www.youtube.com/watch?v=2TJxpyO3ei4"
+                        },
+                        codeSnippet: `from langchain.retrievers import ContextualCompressionRetriever
+from langchain_community.document_compressors import CohereRerank
+
+compressor = CohereRerank()
+compression_retriever = ContextualCompressionRetriever(
+    base_compressor=compressor, base_retriever=retriever
+)`,
+                        checklist: [
+                            "Set up Cohere Rerank model",
+                            "Implement query rewriting prompts",
+                            "Test retrieval accuracy improvement"
+                        ]
+                    }
+                ]
+            },
+            {
+                level: 5,
+                levelTitle: "Level 5: Autonomous AI Agents & Voice Automation",
+                levelDesc: "Multi-agent frameworks (CrewAI/AutoGen), voice synthesis, and real-time telephonic AI.",
+                topics: [
+                    {
+                        id: "topic-crew-ai",
+                        title: "Multi-Agent Orchestration with CrewAI",
+                        estTime: "5 hours",
+                        prereqs: ["Level 4 Enterprise Pipelines"],
+                        objectives: ["Configure Agent Roles, Goals, and Backstories", "Define sequential and hierarchical Task workflows", "Enable inter-agent communication loops"],
+                        outcomes: "Autonomous teams of virtual researchers, writers, and code reviewers.",
+                        video: {
+                            title: "CrewAI Multi-Agent Tutorial",
+                            channel: "Brandon Hancock",
+                            url: "https://www.youtube.com/watch?v=sPzc6hMg7So"
+                        },
+                        codeSnippet: `from crewai import Agent, Task, Crew
+
+researcher = Agent(role="Researcher", goal="Discover market trends", backstory="Senior Analyst")
+task = Task(description="Analyze 2026 AI trends", agent=researcher)
+crew = Crew(agents=[researcher], tasks=[task])
+crew.kickoff()`,
+                        checklist: [
+                            "Define multiple specialized agents",
+                            "Assign sequential dependencies",
+                            "Run autonomous crew execution loop"
+                        ]
+                    },
+                    {
+                        id: "topic-voice-ai",
+                        title: "Voice AI & Speech Synthesis with ElevenLabs",
+                        estTime: "3.5 hours",
+                        prereqs: ["Multi-Agent Orchestration with CrewAI"],
+                        objectives: ["Stream ultra-low latency voice synthesis", "Clone custom voices programmatically", "Implement Whisper Speech-to-Text pipelines"],
+                        outcomes: "Real-time interactive voice agents.",
+                        video: {
+                            title: "ElevenLabs API Tutorial",
+                            channel: "AI Jason",
+                            url: "https://www.youtube.com/watch?v=CqY2yD4iF-o"
+                        },
+                        codeSnippet: `from elevenlabs import generate, stream
+
+audio_stream = generate(
+    text="Hello! I am your automated AI voice agent.",
+    voice="Rachel",
+    stream=True
+)`,
+                        checklist: [
+                            "Convert speech to text with Whisper",
+                            "Synthesize audio stream with ElevenLabs",
+                            "Build real-time audio loop"
+                        ]
+                    },
+                    {
+                        id: "topic-twilio-voice",
+                        title: "Telephonic AI Agents with Twilio & WebSockets",
+                        estTime: "6 hours",
+                        prereqs: ["Voice AI & Speech Synthesis with ElevenLabs"],
+                        objectives: ["Connect Twilio Voice Webhooks to FastAPIs", "Handle bidirectional audio streaming via WebSockets", "Manage interruption handling (barge-in)"],
+                        outcomes: "Inbound/Outbound automated phone call customer service agents.",
+                        video: {
+                            title: "Build an AI Voice Agent for Phone Calls",
+                            channel: "Mckay Wrigley",
+                            url: "https://www.youtube.com/watch?v=b4dK2n6d_sA"
+                        },
+                        codeSnippet: `// Twilio TwiML for WebSocket audio stream
+<Response>
+  <Connect>
+    <Stream url="wss://your-domain.com/media-stream" />
+  </Connect>
+</Response>`,
+                        checklist: [
+                            "Configure Twilio virtual phone number",
+                            "Stream audio packets via WebSockets",
+                            "Achieve sub-800ms full response latency"
+                        ]
+                    },
+                    {
+                        id: "topic-agent-evals",
+                        title: "Production Agent Ops & Monitoring",
+                        estTime: "4 hours",
+                        prereqs: ["Telephonic AI Agents with Twilio & WebSockets"],
+                        objectives: ["Trace agent reasoning traces with LangSmith / Phoenix", "Monitor API token costs in real time", "Setup automated alert webhooks for loop errors"],
+                        outcomes: "Full visibility and cost controls for production agent fleets.",
+                        video: {
+                            title: "LangSmith Tracing & Evals Guide",
+                            channel: "LangChain",
+                            url: "https://www.youtube.com/watch?v=N4E6dAt6_M0"
+                        },
+                        codeSnippet: `import os
+os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGCHAIN_API_KEY"] = "ls__your_key"`,
+                        checklist: [
+                            "Enable LangSmith tracing",
+                            "Review detailed execution logs",
+                            "Set threshold alert webhooks"
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // Practical Projects Dataset
+        const PROJECTS_DATA = [
+            {
+                id: "proj-email-responder",
+                title: "Customer Support AI Email Responder",
+                difficulty: "Beginner",
+                estHours: "4-6 hours",
+                prereqs: ["REST APIs & Webhooks", "Make.com & Zapier Integration"],
+                description: "Build an automated workflow that intercepts incoming support emails, classifies sentiment/urgency, queries a knowledge lookup table, and drafts customized context-aware replies.",
+                milestones: [
+                    "Set up incoming Gmail webhook trigger in Make.com",
+                    "Classify incoming email priority using OpenAI prompt",
+                    "Query Airtable knowledge table for resolution steps",
+                    "Draft email response and send for human approval"
+                ]
+            },
+            {
+                id: "proj-web-scraper",
+                title: "Automated Web Scraping & Summarization Pipeline",
+                difficulty: "Intermediate",
+                estHours: "6-8 hours",
+                prereqs: ["Python Automation Essentials", "JSON & Structural Data Parsing", "Foundational Prompt Engineering"],
+                description: "Develop a Python pipeline that periodically scrapes top technology news RSS feeds, strips HTML boilerplate, summarizes articles into markdown executive briefs, and broadcasts alerts to Slack.",
+                milestones: [
+                    "Scrape HTML content using BeautifulSoup / Playwright",
+                    "Extract main body text and clean noise",
+                    "Generate concise executive summaries with structured key takeaways",
+                    "Post formatted Slack webhook blocks"
+                ]
+            },
+            {
+                id: "proj-notion-rag",
+                title: "RAG Knowledge Base Bot for Notion",
+                difficulty: "Advanced",
+                estHours: "10-12 hours",
+                prereqs: ["RAG Architecture & Vector Embeddings", "Vector Databases: Pinecone & Chroma"],
+                description: "Create an internal company assistant that syncs with your Notion workspace, generates chunked vector embeddings in Pinecone, and allows team members to ask complex document questions.",
+                milestones: [
+                    "Authenticate Notion API & fetch document pages",
+                    "Chunk page markdown and index in Pinecone",
+                    "Build FastAPI endpoint with LangChain RAG pipeline",
+                    "Deploy conversational interface"
+                ]
+            },
+            {
+                id: "proj-multi-agent",
+                title: "Multi-Agent Content Generation Engine",
+                difficulty: "Expert",
+                estHours: "12-16 hours",
+                prereqs: ["Multi-Agent Orchestration with CrewAI"],
+                description: "Assemble an autonomous crew composed of a Researcher, Technical Writer, and SEO Editor that turns raw user topic ideas into fully researched, polished, and search-optimized technical blog articles.",
+                milestones: [
+                    "Initialize CrewAI agents with distinct roles & tools",
+                    "Configure Tavily Web Search tool integration",
+                    "Run automated sequential writing & editing tasks",
+                    "Export polished Markdown and log token usage metrics"
+                ]
+            }
+        ];
+
+        // Gamified Badges Dataset
+        const BADGES_DATA = [
+            { id: "badge-first-step", title: "First Step", icon: "🌱", desc: "Complete your first topic in the roadmap.", criteria: "1 Topic Completed" },
+            { id: "badge-api-wizard", title: "API Wizard", icon: "⚡", desc: "Complete all Level 1 Foundations topics.", criteria: "Level 1 Cleared" },
+            { id: "badge-nocode-pioneer", title: "No-Code Pioneer", icon: "🧩", desc: "Complete all Level 2 Automation topics.", criteria: "Level 2 Cleared" },
+            { id: "badge-agent-builder", title: "Agent Architect", icon: "🤖", desc: "Complete all Level 3 Custom AI Agent topics.", criteria: "Level 3 Cleared" },
+            { id: "badge-rag-master", title: "RAG Master", icon: "📚", desc: "Complete all Level 4 Enterprise RAG topics.", criteria: "Level 4 Cleared" },
+            { id: "badge-autonomous-guru", title: "Autonomous Guru", icon: "🚀", desc: "Complete all Level 5 Multi-Agent topics.", criteria: "Level 5 Cleared" },
+            { id: "badge-streak-7", title: "7-Day Streak Master", icon: "🔥", desc: "Maintain an active study streak for 7 consecutive days.", criteria: "7 Day Streak" },
+            { id: "badge-project-pro", title: "Portfolio Builder", icon: "🛠️", desc: "Complete your first practical project.", criteria: "1 Project Completed" }
+        ];
+
+        /* ==================== STATE MANAGEMENT & STORAGE ==================== */
+        
+        let state = {
+            currentTab: 'dashboard',
+            topicStatuses: {}, // topicId: "not_started" | "in_progress" | "completed"
+            userNotes: {}, // topicId: string
+            bookmarks: [], // array of topicIds
+            dailyStreak: 1,
+            lastStudyDate: null,
+            topicChecklists: {}, // topicId: boolean[]
+            focusMinutesTotal: 0,
+            projectStatuses: {}, // projId: status
+            projectReflections: {}, // projId: text
+            settings: {
+                dailyGoalMinutes: 45,
+                pace: 'standard',
+                soundEnabled: false
+            },
+            dailyTasks: [
+                { id: "task-1", text: "Read REST APIs & Webhooks guide", completed: false },
+                { id: "task-2", text: "Run 25 min Pomodoro study timer", completed: false }
+            ],
+            activityHistory: {} // YYYY-MM-DD: minutes
+        };
+
+        // Initialize state from LocalStorage or default sample data
+        function initState() {
+            const saved = localStorage.getItem(window.getFlashMentorDataKey());
+            if (saved) {
+                try {
+                    state = { ...state, ...JSON.parse(saved) };
+                } catch (e) {
+                    console.error("Failed to parse saved state", e);
+                }
+            } else {
+                // Initial sample defaults for vibrant first launch experience
+                state.topicStatuses['topic-api-basics'] = 'completed';
+                state.topicStatuses['topic-python-auto'] = 'in_progress';
+                state.userNotes['topic-api-basics'] = "Key takeaway: Always pass authorization headers securely using environment variables!";
+                state.bookmarks.push('topic-api-basics');
+                state.projectStatuses['proj-email-responder'] = 'in_progress';
+                
+                const today = localDateKey();
+                state.activityHistory[today] = 25;
+                saveState();
+            }
+
+            // Verify daily streak
+            checkStreak();
+            
+            // Sync settings UI
+            document.getElementById('settingDailyGoal').value = state.settings.dailyGoalMinutes;
+            document.getElementById('settingPace').value = state.settings.pace;
+            document.getElementById('settingSoundToggle').checked = state.settings.soundEnabled;
+            updateSoundIcon();
+            
+            renderAllViews();
+        }
+
+        function saveState() {
+            localStorage.setItem(window.getFlashMentorDataKey(), JSON.stringify(state));
+            updateGlobalStats();
+        }
+
+        function localDateKey(date = new Date()) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function shiftLocalDateKey(dateKey, offset) {
+            const [year, month, day] = dateKey.split('-').map(Number);
+            const date = new Date(year, month - 1, day);
+            date.setDate(date.getDate() + offset);
+            return localDateKey(date);
+        }
+
+        function checkStreak() {
+            const studyDates = new Set(Object.entries(state.activityHistory || {})
+                .filter(([, minutes]) => Number(minutes) > 0)
+                .map(([date]) => date));
+            let cursor = localDateKey();
+            if (!studyDates.has(cursor)) cursor = shiftLocalDateKey(cursor, -1);
+
+            let streak = 0;
+            while (studyDates.has(cursor)) {
+                streak++;
+                cursor = shiftLocalDateKey(cursor, -1);
+            }
+
+            state.dailyStreak = streak;
+            state.lastStudyDate = [...studyDates].sort().pop() || null;
+        }
+
+        /* ==================== WEB AUDIO API SYNTHESIZER ==================== */
+        
+        let audioCtx = null;
+        function playSynthesizedSound(type) {
+            if (!state.settings.soundEnabled) return;
+            
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                const now = audioCtx.currentTime;
+                
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'success') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+                    osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                }
+            } catch (e) {
+                console.warn("Audio playback not supported or restricted", e);
+            }
+        }
+
+        function toggleSound() {
+            state.settings.soundEnabled = !state.settings.soundEnabled;
+            document.getElementById('settingSoundToggle').checked = state.settings.soundEnabled;
+            updateSoundIcon();
+            saveState();
+            if (state.settings.soundEnabled) playSynthesizedSound('click');
+        }
+
+        function updateSoundIcon() {
+            const icon = document.getElementById('soundIcon');
+            if (icon) icon.textContent = state.settings.soundEnabled ? '🔊' : '🔇';
+        }
+
+        /* ==================== NAVIGATION CONTROLLER ==================== */
+        
+        function navigateTo(tabId) {
+            playSynthesizedSound('click');
+            state.currentTab = tabId;
+            
+            // Hide all pages
+            document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
+            
+            // Show target page
+            const target = document.getElementById(`page-${tabId}`);
+            if (target) target.classList.remove('hidden');
+            
+            // Update nav link highlights
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-royal/20', 'text-electric', 'border', 'border-royal/40');
+                btn.classList.add('text-slate-300', 'hover:bg-navy-800');
+            });
+            
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-300', 'hover:bg-navy-800');
+                activeBtn.classList.add('bg-royal/20', 'text-electric', 'border', 'border-royal/40');
+            }
+            
+            // Re-render canvas charts if entering relevant pages
+            if (tabId === 'dashboard') {
+                renderWeeklyActivityChart();
+            } else if (tabId === 'achievements') {
+                renderCategoryChart();
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        /* ==================== DASHBOARD & STATS LOGIC ==================== */
+        
+        function getAllTopicsFlat() {
+            const list = [];
+            ROADMAP_DATA.forEach(lvl => {
+                lvl.topics.forEach(t => {
+                    list.push({ ...t, levelNum: lvl.level, levelTitle: lvl.levelTitle });
+                });
+            });
+            return list;
+        }
+
+        function updateGlobalStats() {
+            const allTopics = getAllTopicsFlat();
+            const total = allTopics.length;
+            let completedCount = 0;
+            
+            allTopics.forEach(t => {
+                if (state.topicStatuses[t.id] === 'completed') completedCount++;
+            });
+            
+            const pct = Math.round((completedCount / total) * 100);
+            
+            // Update Dashboard progress bar
+            const bar = document.getElementById('dash-progress-bar');
+            if (bar) bar.style.width = `${pct}%`;
+            
+            const pctText = document.getElementById('dash-progress-pct');
+            if (pctText) pctText.textContent = `${pct}%`;
+            
+            const countText = document.getElementById('dash-progress-count');
+            if (countText) countText.textContent = `${completedCount} / ${total} Roadmap Topics Done`;
+            
+            // Streak
+            const streakText = document.getElementById('dash-streak-days');
+            if (streakText) streakText.textContent = `${state.dailyStreak} Days`;
+            const headerStreak = document.getElementById('headerStreak');
+            if (headerStreak) headerStreak.textContent = `${state.dailyStreak} Day Streak`;
+            
+            // Total Hours
+            const hours = Math.floor(state.focusMinutesTotal / 60);
+            const mins = state.focusMinutesTotal % 60;
+            const timeText = document.getElementById('dash-total-time');
+            if (timeText) timeText.textContent = `${hours}h ${mins}m`;
+            
+            // Determine current level
+            let currentLevel = 1;
+            ROADMAP_DATA.forEach(lvl => {
+                const lvlCompleted = lvl.topics.filter(t => state.topicStatuses[t.id] === 'completed').length;
+                if (lvlCompleted === lvl.topics.length && lvl.level < 5) {
+                    currentLevel = lvl.level + 1;
+                }
+            });
+            
+            const lvlObj = ROADMAP_DATA.find(l => l.level === currentLevel);
+            const lvlDoneCount = lvlObj.topics.filter(t => state.topicStatuses[t.id] === 'completed').length;
+            
+            const lvlTitle = document.getElementById('dash-level-title');
+            if (lvlTitle) lvlTitle.textContent = lvlObj.levelTitle;
+            
+            const lvlSub = document.getElementById('dash-level-sub');
+            if (lvlSub) lvlSub.textContent = `${lvlDoneCount} of ${lvlObj.topics.length} topics completed`;
+            
+            // Recommended Next Step
+            const nextTopic = allTopics.find(t => state.topicStatuses[t.id] !== 'completed') || allTopics[0];
+            const nextTitle = document.getElementById('dash-next-title');
+            if (nextTitle) nextTitle.textContent = nextTopic.title;
+            const nextDesc = document.getElementById('dash-next-desc');
+            if (nextDesc) nextDesc.textContent = nextTopic.outcomes;
+            const nextBtn = document.getElementById('dash-next-btn');
+            if (nextBtn) nextBtn.onclick = () => openTopicGuide(nextTopic.id);
+
+            // Today's Target Widget
+            renderTodayTargetWidget();
+            
+            // Render Badges
+            renderBadges();
+        }
+
+        function resumeLearning() {
+            const allTopics = getAllTopicsFlat();
+            const nextTopic = allTopics.find(t => state.topicStatuses[t.id] === 'in_progress') || allTopics.find(t => state.topicStatuses[t.id] !== 'completed') || allTopics[0];
+            openTopicGuide(nextTopic.id);
+        }
+
+        function renderTodayTargetWidget() {
+            const widget = document.getElementById('todayTargetWidget');
+            if (!widget) return;
+            
+            const goalMins = state.settings.dailyGoalMinutes;
+            const today = localDateKey();
+            const loggedMins = state.activityHistory[today] || 0;
+            const pct = Math.min(100, Math.round((loggedMins / goalMins) * 100));
+            
+            widget.innerHTML = `
+                <div class="space-y-2">
+                    <div class="flex justify-between text-xs text-slate-300 font-semibold">
+                        <span>Study Goal: ${goalMins} mins</span>
+                        <span class="text-electric">${loggedMins} / ${goalMins} mins (${pct}%)</span>
+                    </div>
+                    <div class="w-full bg-navy-900 h-2 rounded-full overflow-hidden border border-slate-700">
+                        <div class="bg-gradient-to-r from-amber to-electric h-full transition-all duration-500" style="width: ${pct}%"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ==================== CANVAS CHART RENDERING ==================== */
+        
+        function renderWeeklyActivityChart() {
+            const canvas = document.getElementById('weeklyActivityCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            // Handle DPI scaling
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            const w = rect.width;
+            const h = rect.height;
+            
+            ctx.clearRect(0, 0, w, h);
+            
+            // Get past 7 days data
+            const days = [];
+            const data = [];
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date(Date.now() - i * 86400000);
+                const dateStr = localDateKey(d);
+                const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
+                days.push(dayName);
+                data.push(state.activityHistory[dateStr] || 0);
+            }
+            
+            const maxVal = Math.max(...data, 60);
+            const padding = 30;
+            const chartW = w - padding * 2;
+            const chartH = h - padding * 2;
+            const barWidth = (chartW / days.length) * 0.45;
+            
+            // Draw grid lines
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 4; i++) {
+                const y = padding + (chartH / 4) * i;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(w - padding, y);
+                ctx.stroke();
+            }
+            
+            // Draw Bars
+            days.forEach((day, idx) => {
+                const val = data[idx];
+                const barH = (val / maxVal) * chartH;
+                const x = padding + (idx * (chartW / days.length)) + (chartW / days.length - barWidth) / 2;
+                const y = padding + chartH - barH;
+                
+                // Bar gradient
+                const grad = ctx.createLinearGradient(0, y, 0, padding + chartH);
+                grad.addColorStop(0, '#4CC9F0');
+                grad.addColorStop(1, '#4361EE');
+                
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.roundRect(x, y, barWidth, barH, [4, 4, 0, 0]);
+                ctx.fill();
+                
+                // Day Labels
+                ctx.fillStyle = '#94A3B8';
+                ctx.font = '11px Plus Jakarta Sans';
+                ctx.textAlign = 'center';
+                ctx.fillText(day, x + barWidth / 2, h - 8);
+                
+                // Value text above bar
+                if (val > 0) {
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.font = '10px Fira Code';
+                    ctx.fillText(`${val}m`, x + barWidth / 2, y - 6);
+                }
+            });
+        }
+
+        function renderCategoryChart() {
+            const canvas = document.getElementById('categoryDistributionCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            const w = rect.width;
+            const h = rect.height;
+            ctx.clearRect(0, 0, w, h);
+            
+            // Calculate completions per level
+            const levelData = ROADMAP_DATA.map(lvl => {
+                const done = lvl.topics.filter(t => state.topicStatuses[t.id] === 'completed').length;
+                return { level: `L${lvl.level}`, done, total: lvl.topics.length };
+            });
+            
+            const padding = 30;
+            const chartW = w - padding * 2;
+            const chartH = h - padding * 2;
+            const barHeight = 24;
+            const gap = 16;
+            
+            levelData.forEach((d, idx) => {
+                const y = padding + idx * (barHeight + gap);
+                const pct = d.done / d.total;
+                const fillW = chartW * pct;
+                
+                // Background Track
+                ctx.fillStyle = 'rgba(28, 37, 65, 0.8)';
+                ctx.beginPath();
+                ctx.roundRect(padding, y, chartW, barHeight, 6);
+                ctx.fill();
+                
+                // Progress Fill
+                if (fillW > 0) {
+                    const grad = ctx.createLinearGradient(padding, 0, padding + fillW, 0);
+                    grad.addColorStop(0, '#2EC4B6');
+                    grad.addColorStop(1, '#4CC9F0');
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.roundRect(padding, y, Math.max(fillW, 12), barHeight, 6);
+                    ctx.fill();
+                }
+                
+                // Text Label
+                ctx.fillStyle = '#FFFFFF';
+                ctx.font = '12px Plus Jakarta Sans';
+                ctx.textAlign = 'left';
+                ctx.fillText(`Level ${idx + 1}`, padding + 10, y + 16);
+                
+                ctx.fillStyle = '#94A3B8';
+                ctx.textAlign = 'right';
+                ctx.fillText(`${d.done}/${d.total} Done`, padding + chartW - 10, y + 16);
+            });
+        }
+
+        /* ==================== ROADMAP VIEW RENDERER ==================== */
+        
+        function renderRoadmap() {
+            const container = document.getElementById('roadmapLevelsContainer');
+            if (!container) return;
+            
+            const filter = document.getElementById('roadmapFilter')?.value || 'all';
+            
+            container.innerHTML = ROADMAP_DATA.map(lvl => {
+                const filteredTopics = lvl.topics.filter(t => {
+                    const st = state.topicStatuses[t.id] || 'not_started';
+                    if (filter === 'all') return true;
+                    return st === filter;
+                });
+                
+                if (filteredTopics.length === 0 && filter !== 'all') return '';
+                
+                const lvlCompleted = lvl.topics.filter(t => state.topicStatuses[t.id] === 'completed').length;
+                const lvlPct = Math.round((lvlCompleted / lvl.topics.length) * 100);
+                
+                return `
+                    <div class="glass-panel rounded-2xl border border-slate-800 p-6 space-y-6">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-800 pb-4">
+                            <div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-royal/20 text-electric border border-royal/30 uppercase">
+                                        Level ${lvl.level}
+                                    </span>
+                                    <h2 class="text-xl font-bold text-white">${lvl.levelTitle.split(': ')[1]}</h2>
+                                </div>
+                                <p class="text-xs text-slate-400 mt-1">${lvl.levelDesc}</p>
+                            </div>
+                            <div class="flex items-center space-x-3 text-xs">
+                                <span class="text-slate-400">${lvlCompleted}/${lvl.topics.length} Done (${lvlPct}%)</span>
+                                <div class="w-24 bg-navy-900 h-2 rounded-full overflow-hidden border border-slate-700">
+                                    <div class="bg-teal h-full" style="width: ${lvlPct}%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${filteredTopics.map(topic => {
+                                const status = state.topicStatuses[topic.id] || 'not_started';
+                                let statusBadge = `<span class="px-2 py-0.5 rounded text-xs font-semibold bg-slate-800 text-slate-400">Not Started</span>`;
+                                if (status === 'in_progress') {
+                                    statusBadge = `<span class="px-2 py-0.5 rounded text-xs font-semibold bg-amber/20 text-amber border border-amber/30">In Progress</span>`;
+                                } else if (status === 'completed') {
+                                    statusBadge = `<span class="px-2 py-0.5 rounded text-xs font-semibold bg-teal/20 text-teal border border-teal/30">Completed</span>`;
+                                }
+
+                                return `
+                                    <div class="p-5 rounded-xl bg-navy-900/90 border border-slate-800 hover:border-royal/50 transition flex flex-col justify-between space-y-4 group">
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-xs text-slate-400 font-mono">⏱️ ${topic.estTime}</span>
+                                                ${statusBadge}
+                                            </div>
+                                            <h3 class="text-base font-bold text-white group-hover:text-electric transition cursor-pointer" onclick="openTopicGuide('${topic.id}')">
+                                                ${topic.title}
+                                            </h3>
+                                            <p class="text-xs text-slate-300 line-clamp-2">${topic.outcomes}</p>
+                                        </div>
+
+                                        <div class="flex items-center justify-between pt-2 border-t border-slate-800/60 text-xs">
+                                            <select onchange="changeTopicStatus('${topic.id}', this.value)" class="bg-navy-800 border border-slate-700 text-slate-200 rounded-lg px-2.5 py-1 text-xs focus:outline-none focus:border-electric">
+                                                <option value="not_started" ${status === 'not_started' ? 'selected' : ''}>Not Started</option>
+                                                <option value="in_progress" ${status === 'in_progress' ? 'selected' : ''}>In Progress</option>
+                                                <option value="completed" ${status === 'completed' ? 'selected' : ''}>Completed</option>
+                                            </select>
+                                            
+                                            <button onclick="openTopicGuide('${topic.id}')" class="text-electric font-semibold hover:underline flex items-center space-x-1">
+                                                <span>Guide</span>
+                                                <span>→</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterRoadmapTopics() {
+            renderRoadmap();
+        }
+
+        function changeTopicStatus(topicId, newStatus) {
+            playSynthesizedSound('click');
+            state.topicStatuses[topicId] = newStatus;
+            
+            if (newStatus === 'completed') {
+                triggerConfetti();
+                playSynthesizedSound('success');
+            }
+            
+            saveState();
+            renderRoadmap();
+            
+            // Sync guide button if viewing same topic
+            const currentGuideSelect = document.getElementById('topicGuideSelect');
+            if (currentGuideSelect && currentGuideSelect.value === topicId) {
+                updateGuideStatusButtonUI(newStatus);
+            }
+        }
+
+        /* ==================== TOPIC GUIDES CONTROLLER ==================== */
+        
+        function populateTopicGuideSelector() {
+            const select = document.getElementById('topicGuideSelect');
+            if (!select) return;
+            
+            const allTopics = getAllTopicsFlat();
+            select.innerHTML = allTopics.map(t => {
+                const st = state.topicStatuses[t.id] === 'completed' ? ' [✅]' : '';
+                return `<option value="${t.id}">Level ${t.levelNum}: ${t.title}${st}</option>`;
+            }).join('');
+        }
+
+        function openTopicGuide(topicId) {
+            navigateTo('guides');
+            const select = document.getElementById('topicGuideSelect');
+            if (select) {
+                select.value = topicId;
+                loadTopicGuide(topicId);
+            }
+        }
+
+        function loadTopicGuide(topicId) {
+            const allTopics = getAllTopicsFlat();
+            const topic = allTopics.find(t => t.id === topicId) || allTopics[0];
+            const content = document.getElementById('topicGuideContent');
+            if (!content) return;
+            
+            const isBookmarked = state.bookmarks.includes(topic.id);
+            updateBookmarkButtonUI(isBookmarked);
+            
+            const status = state.topicStatuses[topic.id] || 'not_started';
+            updateGuideStatusButtonUI(status);
+            
+            const userNote = state.userNotes[topic.id] || '';
+
+            content.innerHTML = `
+                <div class="glass-panel p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-6">
+                    <!-- Title & Header -->
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3 text-xs">
+                            <span class="px-2.5 py-1 rounded bg-royal/20 text-electric border border-royal/30 font-bold uppercase">
+                                Level ${topic.levelNum}
+                            </span>
+                            <span class="text-slate-400">Est Time: ${topic.estTime}</span>
+                        </div>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold text-white">${topic.title}</h1>
+                        <p class="text-slate-300 text-sm leading-relaxed">${topic.outcomes}</p>
+                    </div>
+
+                    <!-- Learning Objectives Grid -->
+                    <div class="p-5 rounded-xl bg-navy-900 border border-slate-800 space-y-3">
+                        <h3 class="text-sm font-bold text-electric uppercase tracking-wider">🎯 Learning Objectives</h3>
+                        <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+                            ${topic.objectives.map(obj => `<li class="flex items-start space-x-2"><span class="text-teal font-bold">•</span><span>${obj}</span></li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- Embedded Curated Video -->
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-bold text-white flex items-center gap-2"><span>🎥</span><span>Recommended video</span>${topic.video?.url ? '<span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-mono">Direct video</span>' : ''}</h3>
+                        ${topic.video?.url ? `
+                        <div class="p-4 rounded-xl bg-navy-900 border border-slate-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <div class="space-y-1"><h4 class="text-sm font-bold text-white">${escapeHtml(topic.video.title)}</h4><p class="text-xs text-slate-400">Channel: ${escapeHtml(topic.video.channel || 'Channel details not verified')}</p></div>
+                            <a href="${topic.video.url}" target="_blank" rel="noopener noreferrer" aria-label="Watch ${escapeHtml(topic.video.title)} on YouTube" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition flex items-center justify-center space-x-2 flex-shrink-0"><span>▶ Watch this video</span></a>
+                        </div>` : `<div class="p-4 rounded-xl bg-navy-900 border border-slate-800 text-sm text-slate-300">No suitable verified YouTube video is available for this topic yet.</div>`}
+                    </div>
+
+                    <!-- Code / Prompt Interactive Playground -->
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                            <span>💻</span><span>Practical Implementation Example</span>
+                        </h3>
+                        <div class="relative rounded-xl overflow-hidden border border-slate-800 bg-navy-950 p-4 font-mono text-xs text-slate-200">
+                            <button onclick="copyCodeSnippet('${topic.id}')" class="absolute top-3 right-3 px-2.5 py-1 rounded bg-navy-800 hover:bg-navy-700 text-[11px] text-slate-300 border border-slate-700">
+                                Copy
+                            </button>
+                            <pre id="codeSnippet-${topic.id}" class="whitespace-pre-wrap overflow-x-auto">${escapeHtml(topic.codeSnippet)}</pre>
+                        </div>
+                    </div>
+
+                    <!-- Practical Completion Checklist -->
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                            <span>✅</span><span>Practical Mastery Checklist</span>
+                        </h3>
+                        <div class="space-y-2">
+                            ${topic.checklist.map((item, idx) => `
+                                <label class="flex items-center space-x-3 p-3 rounded-xl bg-navy-900 border border-slate-800/80 hover:border-slate-700 cursor-pointer transition">
+                                    <input type="checkbox" ${state.topicChecklists?.[topic.id]?.[idx] ? 'checked' : ''} onchange="saveTopicChecklist('${topic.id}', ${idx}, this.checked); playSynthesizedSound('click')" class="w-4 h-4 accent-teal rounded border-slate-700 bg-navy-800">
+                                    <span class="text-xs sm:text-sm text-slate-300">${item}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Personal Notepad -->
+                    <div class="space-y-3 pt-4 border-t border-slate-800">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                                <span>📝</span><span>Personal Notes</span>
+                            </h3>
+                            <span class="text-[10px] text-slate-400 font-mono">Auto-saved to LocalStorage</span>
+                        </div>
+                        <textarea id="topicNotesArea" oninput="saveCurrentTopicNotes('${topic.id}', this.value)" placeholder="Record key insights, code tweaks, or questions for this topic..." class="w-full h-32 bg-navy-900 border border-slate-700 text-slate-200 rounded-xl p-4 text-xs sm:text-sm focus:outline-none focus:border-electric">${escapeHtml(userNote)}</textarea>
+                    </div>
+                </div>
+            `;
+        }
+
+        function escapeHtml(text) {
+            return String(text ?? '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+        }
+
+        function saveTopicChecklist(topicId, index, checked) {
+            state.topicChecklists ||= {};
+            state.topicChecklists[topicId] ||= [];
+            state.topicChecklists[topicId][index] = checked;
+            saveState();
+        }
+
+        function copyCodeSnippet(topicId) {
+            const pre = document.getElementById(`codeSnippet-${topicId}`);
+            if (pre) {
+                const textarea = document.createElement('textarea');
+                textarea.value = pre.textContent;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                playSynthesizedSound('click');
+            }
+        }
+
+        function saveCurrentTopicNotes(topicId, text) {
+            state.userNotes[topicId] = text;
+            saveState();
+        }
+
+        function toggleBookmarkCurrentTopic() {
+            const select = document.getElementById('topicGuideSelect');
+            if (!select) return;
+            const topicId = select.value;
+            
+            const idx = state.bookmarks.indexOf(topicId);
+            if (idx > -1) {
+                state.bookmarks.splice(idx, 1);
+                updateBookmarkButtonUI(false);
+            } else {
+                state.bookmarks.push(topicId);
+                updateBookmarkButtonUI(true);
+            }
+            playSynthesizedSound('click');
+            saveState();
+        }
+
+        function updateBookmarkButtonUI(isBookmarked) {
+            const text = document.getElementById('guideBookmarkText');
+            if (text) text.textContent = isBookmarked ? 'Bookmarked' : 'Bookmark Guide';
+            const icon = document.getElementById('guideBookmarkIcon');
+            if (icon) icon.textContent = isBookmarked ? '⭐' : '🔖';
+        }
+
+        function toggleCurrentTopicStatus() {
+            const select = document.getElementById('topicGuideSelect');
+            if (!select) return;
+            const topicId = select.value;
+            
+            const current = state.topicStatuses[topicId];
+            const next = current === 'completed' ? 'in_progress' : 'completed';
+            changeTopicStatus(topicId, next);
+        }
+
+        function updateGuideStatusButtonUI(status) {
+            const text = document.getElementById('guideStatusText');
+            if (text) text.textContent = status === 'completed' ? 'Completed' : 'Mark Completed';
+        }
+
+        function navigateTopicOffset(offset) {
+            const select = document.getElementById('topicGuideSelect');
+            if (!select) return;
+            const all = getAllTopicsFlat();
+            const currIdx = all.findIndex(t => t.id === select.value);
+            const targetIdx = currIdx + offset;
+            
+            if (targetIdx >= 0 && targetIdx < all.length) {
+                select.value = all[targetIdx].id;
+                loadTopicGuide(all[targetIdx].id);
+            }
+        }
+
+        /* ==================== TRACKER & POMODORO TIMER ==================== */
+        
+        let timerInterval = null;
+        let timerSecondsLeft = 25 * 60;
+        let timerInitialSeconds = 25 * 60;
+        let timerRunning = false;
+
+        function togglePomodoroTimer() {
+            playSynthesizedSound('click');
+            const btn = document.getElementById('timerToggleBtn');
+            
+            if (timerRunning) {
+                clearInterval(timerInterval);
+                timerRunning = false;
+                if (btn) btn.textContent = 'Resume Session';
+            } else {
+                timerRunning = true;
+                if (btn) btn.textContent = 'Pause Session';
+                
+                timerInterval = setInterval(() => {
+                    if (timerSecondsLeft > 0) {
+                        timerSecondsLeft--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        timerRunning = false;
+                        if (btn) btn.textContent = 'Start Session';
+                        
+                        // Log minutes
+                        const elapsedMins = Math.round(timerInitialSeconds / 60);
+                        state.focusMinutesTotal += elapsedMins;
+                        
+                        const today = localDateKey();
+                        state.activityHistory[today] = (state.activityHistory[today] || 0) + elapsedMins;
+                        checkStreak();
+                        
+                        playSynthesizedSound('success');
+                        triggerConfetti();
+                        saveState();
+                        renderWeeklyActivityChart();
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetPomodoroTimer() {
+            playSynthesizedSound('click');
+            clearInterval(timerInterval);
+            timerRunning = false;
+            timerSecondsLeft = timerInitialSeconds;
+            updateTimerDisplay();
+            const btn = document.getElementById('timerToggleBtn');
+            if (btn) btn.textContent = 'Start Session';
+        }
+
+        function setTimerPreset(mins) {
+            playSynthesizedSound('click');
+            clearInterval(timerInterval);
+            timerRunning = false;
+            timerInitialSeconds = mins * 60;
+            timerSecondsLeft = timerInitialSeconds;
+            updateTimerDisplay();
+            const btn = document.getElementById('timerToggleBtn');
+            if (btn) btn.textContent = 'Start Session';
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSecondsLeft / 60);
+            const secs = timerSecondsLeft % 60;
+            const display = document.getElementById('timerDisplay');
+            if (display) {
+                display.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+            
+            // Progress ring
+            const circle = document.getElementById('timerCircleProgress');
+            if (circle) {
+                const totalDash = 263.89;
+                const pct = timerSecondsLeft / timerInitialSeconds;
+                circle.style.strokeDashoffset = (totalDash * (1 - pct)).toString();
+            }
+        }
+
+        function renderDailyTasks() {
+            const list = document.getElementById('dailyTasksList');
+            if (!list) return;
+            
+            const done = state.dailyTasks.filter(t => t.completed).length;
+            const countText = document.getElementById('taskCompletionCount');
+            if (countText) countText.textContent = `${done}/${state.dailyTasks.length} Done`;
+
+            list.innerHTML = state.dailyTasks.map(t => `
+                <div class="flex items-center justify-between p-3 rounded-xl bg-navy-900 border border-slate-800 hover:border-slate-700 transition">
+                    <label class="flex items-center space-x-3 cursor-pointer flex-1">
+                        <input type="checkbox" data-task-completion="${escapeHtml(t.id)}" ${t.completed ? 'checked' : ''} class="w-4 h-4 accent-amber rounded">
+                        <span class="text-xs sm:text-sm text-slate-200 ${t.completed ? 'line-through text-slate-500' : ''}">${escapeHtml(t.text)}</span>
+                    </label>
+                    <button data-task-delete="${escapeHtml(t.id)}" class="text-slate-500 hover:text-red-400 text-xs px-2 py-1">
+                        ✕
+                    </button>
+                </div>
+            `).join('');
+            list.querySelectorAll('[data-task-completion]').forEach(input => {
+                input.addEventListener('change', () => toggleTaskDone(input.dataset.taskCompletion));
+            });
+            list.querySelectorAll('[data-task-delete]').forEach(button => {
+                button.addEventListener('click', () => deleteDailyTask(button.dataset.taskDelete));
+            });
+        }
+
+        function addNewDailyTask(e) {
+            e.preventDefault();
+            const input = document.getElementById('newTaskInput');
+            if (!input || !input.value.trim()) return;
+            
+            state.dailyTasks.push({
+                id: 'task-' + Date.now(),
+                text: input.value.trim(),
+                completed: false
+            });
+            
+            input.value = '';
+            playSynthesizedSound('click');
+            saveState();
+            renderDailyTasks();
+        }
+
+        function toggleTaskDone(taskId) {
+            const task = state.dailyTasks.find(t => t.id === taskId);
+            if (task) {
+                task.completed = !task.completed;
+                playSynthesizedSound('click');
+                saveState();
+                renderDailyTasks();
+            }
+        }
+
+        function deleteDailyTask(taskId) {
+            state.dailyTasks = state.dailyTasks.filter(t => t.id !== taskId);
+            playSynthesizedSound('click');
+            saveState();
+            renderDailyTasks();
+        }
+
+        function renderActivityHeatgrid() {
+            const grid = document.getElementById('activityHeatmapGrid');
+            if (!grid) return;
+            
+            const boxes = [];
+            for (let i = 27; i >= 0; i--) {
+                const d = new Date(Date.now() - i * 86400000);
+                const dateStr = localDateKey(d);
+                const mins = state.activityHistory[dateStr] || 0;
+                
+                let bgClass = 'bg-navy-800';
+                if (mins > 45) bgClass = 'bg-teal';
+                else if (mins > 20) bgClass = 'bg-teal/70';
+                else if (mins > 0) bgClass = 'bg-teal/30';
+                
+                boxes.push(`<div class="w-full h-8 rounded ${bgClass} transition hover:scale-105" title="${dateStr}: ${mins} mins"></div>`);
+            }
+            grid.innerHTML = boxes.join('');
+        }
+
+        /* ==================== PROJECTS VIEW RENDERER ==================== */
+        
+        function renderProjects() {
+            const grid = document.getElementById('projectsGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = PROJECTS_DATA.map(proj => {
+                const status = state.projectStatuses[proj.id] || 'not_started';
+                const reflection = state.projectReflections[proj.id] || '';
+                
+                let diffBadge = 'bg-slate-800 text-slate-300';
+                if (proj.difficulty === 'Intermediate') diffBadge = 'bg-royal/20 text-electric border border-royal/30';
+                if (proj.difficulty === 'Advanced') diffBadge = 'bg-amber/20 text-amber border border-amber/30';
+                if (proj.difficulty === 'Expert') diffBadge = 'bg-coral/20 text-coral border border-coral/30';
+
+                return `
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-5 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded text-xs font-bold uppercase ${diffBadge}">
+                                    ${proj.difficulty}
+                                </span>
+                                <span class="text-xs text-slate-400 font-mono">⏱️ ${proj.estHours}</span>
+                            </div>
+
+                            <h2 class="text-lg font-bold text-white">${proj.title}</h2>
+                            <p class="text-xs text-slate-300 leading-relaxed">${proj.description}</p>
+
+                            <!-- Step Milestones -->
+                            <div class="space-y-2 pt-2">
+                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Project Milestones</h4>
+                                <ul class="space-y-1.5 text-xs text-slate-300">
+                                    ${proj.milestones.map(m => `<li class="flex items-start space-x-2"><span class="text-amber">▹</span><span>${m}</span></li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Status & Outcome Reflection -->
+                        <div class="space-y-3 pt-4 border-t border-slate-800">
+                            <div class="flex items-center justify-between">
+                                <label class="text-xs font-semibold text-slate-400">Project Status:</label>
+                                <select onchange="updateProjectStatus('${proj.id}', this.value)" class="bg-navy-900 border border-slate-700 text-xs text-white rounded-lg px-2.5 py-1 focus:outline-none focus:border-electric">
+                                    <option value="not_started" ${status === 'not_started' ? 'selected' : ''}>Not Started</option>
+                                    <option value="in_progress" ${status === 'in_progress' ? 'selected' : ''}>In Progress</option>
+                                    <option value="completed" ${status === 'completed' ? 'selected' : ''}>Completed</option>
+                                </select>
+                            </div>
+
+                            <textarea oninput="saveProjectReflection('${proj.id}', this.value)" placeholder="Record your project outcome notes or Github repo link..." class="w-full h-20 bg-navy-900 border border-slate-800 text-xs text-slate-200 rounded-xl p-3 focus:outline-none focus:border-electric">${escapeHtml(reflection)}</textarea>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateProjectStatus(projId, status) {
+            playSynthesizedSound('click');
+            state.projectStatuses[projId] = status;
+            if (status === 'completed') {
+                triggerConfetti();
+                playSynthesizedSound('success');
+            }
+            saveState();
+        }
+
+        function saveProjectReflection(projId, text) {
+            state.projectReflections[projId] = text;
+            saveState();
+        }
+
+        /* ==================== GAMIFIED BADGES & ACHIEVEMENTS ==================== */
+        
+        function renderBadges() {
+            const grid = document.getElementById('badgesGrid');
+            if (!grid) return;
+            
+            const allTopics = getAllTopicsFlat();
+            const totalDone = allTopics.filter(t => state.topicStatuses[t.id] === 'completed').length;
+            
+            // Level completion checks
+            const lvl1Done = ROADMAP_DATA[0].topics.every(t => state.topicStatuses[t.id] === 'completed');
+            const lvl2Done = ROADMAP_DATA[1].topics.every(t => state.topicStatuses[t.id] === 'completed');
+            const lvl3Done = ROADMAP_DATA[2].topics.every(t => state.topicStatuses[t.id] === 'completed');
+            const lvl4Done = ROADMAP_DATA[3].topics.every(t => state.topicStatuses[t.id] === 'completed');
+            const lvl5Done = ROADMAP_DATA[4].topics.every(t => state.topicStatuses[t.id] === 'completed');
+            
+            const projDone = Object.values(state.projectStatuses).some(s => s === 'completed');
+
+            let unlockedCount = 0;
+
+            grid.innerHTML = BADGES_DATA.map(badge => {
+                let unlocked = false;
+                if (badge.id === 'badge-first-step' && totalDone >= 1) unlocked = true;
+                if (badge.id === 'badge-api-wizard' && lvl1Done) unlocked = true;
+                if (badge.id === 'badge-nocode-pioneer' && lvl2Done) unlocked = true;
+                if (badge.id === 'badge-agent-builder' && lvl3Done) unlocked = true;
+                if (badge.id === 'badge-rag-master' && lvl4Done) unlocked = true;
+                if (badge.id === 'badge-autonomous-guru' && lvl5Done) unlocked = true;
+                if (badge.id === 'badge-streak-7' && state.dailyStreak >= 7) unlocked = true;
+                if (badge.id === 'badge-project-pro' && projDone) unlocked = true;
+
+                if (unlocked) unlockedCount++;
+
+                return `
+                    <div class="p-4 rounded-xl border ${unlocked ? 'bg-navy-900 border-amber/40 shadow-lg shadow-amber/10' : 'bg-navy-950/60 border-slate-800 opacity-50'} text-center space-y-2 relative group">
+                        <div class="text-3xl">${badge.icon}</div>
+                        <div class="text-xs font-bold text-white">${badge.title}</div>
+                        <p class="text-[10px] text-slate-400 line-clamp-2">${badge.desc}</p>
+                        <div class="text-[9px] font-mono text-amber">${unlocked ? '✓ Unlocked' : badge.criteria}</div>
+                    </div>
+                `;
+            }).join('');
+
+            const badgeCountText = document.getElementById('statsBadgeCount');
+            if (badgeCountText) badgeCountText.textContent = `${unlockedCount} / ${BADGES_DATA.length}`;
+            
+            const projCompletedCount = Object.values(state.projectStatuses).filter(s => s === 'completed').length;
+            const statsProj = document.getElementById('statsCompletedProjects');
+            if (statsProj) statsProj.textContent = `${projCompletedCount} / ${PROJECTS_DATA.length}`;
+        }
+
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        /* ==================== SETTINGS & DATA EXPORT ==================== */
+        
+        function updateSettings() {
+            state.settings.dailyGoalMinutes = parseInt(document.getElementById('settingDailyGoal').value) || 45;
+            state.settings.pace = document.getElementById('settingPace').value;
+            state.settings.soundEnabled = document.getElementById('settingSoundToggle').checked;
+            updateSoundIcon();
+            saveState();
+        }
+
+        function exportUserData() {
+            const jsonStr = JSON.stringify(state, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `AI_Automation_Roadmap_Backup_${localDateKey()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importUserData(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    const parsed = JSON.parse(evt.target.result);
+                    state = { ...state, ...parsed };
+                    saveState();
+                    renderAllViews();
+                    alert("Data imported successfully!");
+                } catch (err) {
+                    alert("Invalid JSON file format.");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function confirmResetDataModal() {
+            document.getElementById('resetModal').classList.remove('hidden');
+        }
+
+        function closeResetModal() {
+            document.getElementById('resetModal').classList.add('hidden');
+        }
+
+        function executeResetData() {
+            localStorage.removeItem(window.getFlashMentorDataKey());
+            location.reload();
+        }
+
+        /* ==================== RENDER ALL VIEWS ==================== */
+        
+        function renderAllViews() {
+            updateGlobalStats();
+            renderRoadmap();
+            populateTopicGuideSelector();
+            loadTopicGuide(document.getElementById('topicGuideSelect')?.value || 'topic-api-basics');
+            renderDailyTasks();
+            renderActivityHeatgrid();
+            renderProjects();
+            updateTimerDisplay();
+        }
+
+        // Initialize application on Window Load
+        window.onload = function() {
+            initState();
+            navigateTo('dashboard');
+        };
+    </script>
+
+    <script>
+        function applyFlashMentorTheme(theme) {
+            const isLight = theme === 'light';
+            document.body.classList.toggle('light-mode', isLight);
+            const toggle = document.getElementById('themeToggleBtn');
+            const icon = document.getElementById('themeIcon');
+            const label = document.getElementById('themeSettingsBtn');
+            if (icon) icon.textContent = isLight ? '🌙' : '☀️';
+            if (toggle) {
+                toggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+                toggle.setAttribute('title', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+                toggle.setAttribute('aria-pressed', String(isLight));
+            }
+            if (label) label.textContent = isLight ? 'Switch to dark mode' : 'Switch to light mode';
+        }
+
+        function toggleFlashMentorTheme() {
+            const nextTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
+            localStorage.setItem('flash_mentor_theme', nextTheme);
+            applyFlashMentorTheme(nextTheme);
+        }
+
+        applyFlashMentorTheme(localStorage.getItem('flash_mentor_theme') === 'light' ? 'light' : 'dark');
+    </script>
+    <section id="flashLoginScreen" class="fm-auth-screen" aria-labelledby="flashLoginTitle" aria-modal="true" role="dialog">
+        <div class="fm-auth-shell">
+            <div class="fm-auth-main">
+                <div class="fm-auth-brand"><span class="fm-auth-mark" aria-hidden="true">⚡</span><span><strong>Flash Mentor</strong><small>AI AUTOMATION ROADMAP</small></span></div>
+                <div class="fm-auth-form-wrap">
+                    <div class="fm-auth-eyebrow">Your learning workspace</div>
+                    <h1 id="flashLoginTitle">Create your account</h1>
+                    <p id="flashLoginDescription">Set up a local profile and start building your AI automation skills, one practical step at a time.</p>
+                    <div id="flashAuthTabs" class="fm-auth-tabs" role="tablist" aria-label="Account access"><button id="flashLoginTab" class="fm-auth-tab" type="button" role="tab" aria-selected="false" onclick="setFlashAuthMode('login')">Sign in</button><button id="flashSignupTab" class="fm-auth-tab" type="button" role="tab" aria-selected="true" onclick="setFlashAuthMode('signup')">Create account</button></div>
+                    <form id="flashLoginForm" novalidate>
+                        <div id="flashNameWrap" class="fm-auth-field"><label for="flashProfileInput">Full name</label><input id="flashProfileInput" name="name" type="text" maxlength="48" autocomplete="name" placeholder="e.g. Alex Morgan"></div>
+                        <div class="fm-auth-field"><label for="flashEmailInput">Email address</label><input id="flashEmailInput" name="email" type="email" maxlength="254" autocomplete="email" placeholder="you@example.com" required></div>
+                        <div id="flashPasswordWrap" class="fm-auth-field"><label for="flashPasswordInput">Password</label><div class="fm-auth-pass"><input id="flashPasswordInput" name="password" type="password" minlength="8" maxlength="128" autocomplete="current-password" placeholder="At least 8 characters" required><button id="flashPasswordReveal" class="fm-auth-reveal" type="button" aria-label="Show password" aria-pressed="false" onclick="toggleFlashPasswordVisibility()">Show</button></div></div>
+                        <div id="flashConfirmWrap" class="fm-auth-field" hidden><label for="flashConfirmInput">Confirm password</label><input id="flashConfirmInput" name="confirmPassword" type="password" minlength="8" maxlength="128" autocomplete="new-password" placeholder="Enter the same password again"></div>
+                        <button id="flashLoginSubmit" class="fm-auth-submit" type="submit"><span>✨</span><span>Create local account</span></button><p id="flashLoginMessage" class="fm-auth-message" role="status" aria-live="polite"></p>
+                        <p id="flashAuthSwitch" class="fm-auth-switch">Already have a profile? <button type="button" onclick="setFlashAuthMode('login')">Sign in</button></p>
+                    </form>
+                    <button id="flashProfileLogout" type="button" onclick="signOutFlashMentorProfile()" class="fm-auth-switch" style="display:none;width:100%;border:0;background:none;color:#74dcf1;cursor:pointer;text-decoration:underline;text-underline-offset:3px">Sign out of this profile</button>
+                    <p class="fm-auth-note"><span aria-hidden="true">●</span><span>Your profile and learning data are stored in this browser only. They do not sync across devices. This is a local sign-in, not a secure online account; use a password you do not use elsewhere.</span></p>
+                </div><div style="color:#6f829d;font-size:9px">A focused space to learn, build and keep moving.</div>
+            </div>
+            <aside class="fm-auth-visual" aria-label="Your roadmap at a glance"><div><div class="fm-auth-pill">✦ &nbsp; Learn by building</div><h2>Turn curious ideas into useful automations.</h2><p>Follow a structured path from automation fundamentals to production-ready AI agents, with hands-on projects to make every skill stick.</p></div>
+                <div class="fm-auth-journey" aria-label="Three steps in the learning path"><div class="fm-auth-step"><b>01</b><span><strong>Learn the foundations</strong><small>APIs, data and clear prompts</small></span></div><div class="fm-auth-step"><b>02</b><span><strong>Build real workflows</strong><small>Connect tools and automate tasks</small></span></div><div class="fm-auth-step"><b>03</b><span><strong>Ship with confidence</strong><small>Test, refine and monitor AI systems</small></span></div></div><div class="fm-auth-footer">✦ &nbsp; Small, consistent steps add up.</div>
+            </aside>
+        </div>
+    </section>
+    <script>
+        (() => {
+            const PROFILE_KEY='flash_mentor_local_profile', ACCOUNTS_KEY='flash_mentor_local_accounts_v1', LEGACY_KEY='ai_automation_roadmap_data_v1';
+            const screen=document.getElementById('flashLoginScreen'), form=document.getElementById('flashLoginForm'), nameInput=document.getElementById('flashProfileInput'), emailInput=document.getElementById('flashEmailInput'), passwordInput=document.getElementById('flashPasswordInput'), confirmInput=document.getElementById('flashConfirmInput');
+            const submit=document.getElementById('flashLoginSubmit'), message=document.getElementById('flashLoginMessage'), nameWrap=document.getElementById('flashNameWrap'), passwordWrap=document.getElementById('flashPasswordWrap'), confirmWrap=document.getElementById('flashConfirmWrap'), tabs=document.getElementById('flashAuthTabs'), switchPrompt=document.getElementById('flashAuthSwitch'), logout=document.getElementById('flashProfileLogout');
+            let authMode='signup';
+            const read=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key)||'null')||fallback}catch{return fallback}};
+            const getAccounts=()=>read(ACCOUNTS_KEY,{}), getProfile=()=>read(PROFILE_KEY,null), normEmail=value=>String(value||'').trim().toLowerCase();
+            const userDataKey=email=>'flash_mentor_learning_v1_'+encodeURIComponent(normEmail(email));
+            window.getFlashMentorDataKey=()=>{const profile=getProfile();return profile?.email?userDataKey(profile.email):LEGACY_KEY};
+            function paintProfile(profile){const name=profile?.name||'Learner',email=profile?.email||'',initials=name.trim().split(/\s+/).slice(0,2).map(v=>v[0]||'').join('').toUpperCase()||'L';const sn=document.getElementById('sidebarProfileName'),sa=document.getElementById('sidebarProfileAvatar'),ha=document.getElementById('headerProfileAvatar');if(sn)sn.textContent=name.length>21?name.slice(0,19)+'…':name;if(sa)sa.textContent=initials;if(ha)ha.textContent=initials;const h=document.getElementById('headerProfile');if(h)h.setAttribute('aria-label',`Local profile for ${name}${email?', '+email:''}. Open profile settings.`);const small=document.querySelector('#sidebarProfile .flash-profile-copy small');if(small)small.textContent=email?`${email} · Local profile`:'Local learning profile · Manage'}
+            function setMessage(text){message.textContent=text||''}
+            function setMode(mode){authMode=mode;const editing=mode==='profile',signup=mode==='signup',active=getProfile();tabs.hidden=editing;switchPrompt.hidden=editing;nameWrap.hidden=mode==='login';passwordWrap.hidden=editing;confirmWrap.hidden=!signup;confirmInput.required=signup;passwordInput.required=!editing;emailInput.readOnly=editing;logout.style.display=editing?'inline-flex':'none';
+                if(editing){document.getElementById('flashLoginTitle').textContent='Your local profile';document.getElementById('flashLoginDescription').textContent='Manage the profile and learning data saved in this browser.';nameInput.value=active?.name||'';emailInput.value=active?.email||'';submit.innerHTML='<span>✓</span><span>Save profile</span>'}
+                else{document.getElementById('flashLoginTitle').textContent=signup?'Create your account':'Welcome back';document.getElementById('flashLoginDescription').textContent=signup?'Set up a local profile and start building your AI automation skills, one practical step at a time.':'Sign in to continue your learning journey from where you left off.';submit.innerHTML=signup?'<span>✨</span><span>Create local account</span>':'<span>→</span><span>Sign in to Flash Mentor</span>';document.getElementById('flashLoginTab').setAttribute('aria-selected',String(mode==='login'));document.getElementById('flashSignupTab').setAttribute('aria-selected',String(signup));if(!signup)nameInput.value='';passwordInput.autocomplete=signup?'new-password':'current-password';setMessage('')}
+                screen.style.display='grid';requestAnimationFrame(()=> (editing?nameInput:emailInput).focus())}
+            function clearPasswords(){passwordInput.value='';confirmInput.value=''}
+            function toBase64(bytes){let binary='';for(const byte of new Uint8Array(bytes))binary+=String.fromCharCode(byte);return btoa(binary)}
+            async function hashPassword(password,salt64){if(!window.crypto?.subtle)throw new Error('Password hashing is unavailable in this browser. Open this file in a current browser and try again.');const salt=salt64?Uint8Array.from(atob(salt64),c=>c.charCodeAt(0)):crypto.getRandomValues(new Uint8Array(16));const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveBits']);const bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt,iterations:150000,hash:'SHA-256'},key,256);return{salt:toBase64(salt),hash:toBase64(bits)}}
+            function matches(a,b){if(typeof a!=='string'||typeof b!=='string'||a.length!==b.length)return false;let diff=0;for(let i=0;i<a.length;i++)diff|=a.charCodeAt(i)^b.charCodeAt(i);return diff===0}
+            function freshState(){return{currentTab:'dashboard',topicStatuses:{},userNotes:{},bookmarks:[],dailyStreak:1,lastStudyDate:null,topicChecklists:{},focusMinutesTotal:0,projectStatuses:{},projectReflections:{},settings:{dailyGoalMinutes:45,pace:'standard',soundEnabled:false},dailyTasks:[{id:'task-1',text:'Read REST APIs & Webhooks guide',completed:false},{id:'task-2',text:'Run 25 min Pomodoro study timer',completed:false}],activityHistory:{}}}
+            function enterWorkspace(profile){localStorage.setItem(PROFILE_KEY,JSON.stringify({...profile,updatedAt:new Date().toISOString()}));paintProfile(profile);screen.style.display='none';state=freshState();initState();navigateTo('dashboard')}
+            window.setFlashAuthMode=mode=>setMode(mode==='login'?'login':'signup');window.openFlashMentorProfile=()=>setMode('profile');
+            window.toggleFlashPasswordVisibility=()=>{const show=passwordInput.type==='password',button=document.getElementById('flashPasswordReveal');passwordInput.type=show?'text':'password';confirmInput.type=show?'text':'password';button.textContent=show?'Hide':'Show';button.setAttribute('aria-label',show?'Hide password':'Show password');button.setAttribute('aria-pressed',String(show))};
+            window.signOutFlashMentorProfile=()=>{localStorage.removeItem(PROFILE_KEY);paintProfile(null);clearPasswords();setMode(Object.keys(getAccounts()).length?'login':'signup')};
+            form.addEventListener('submit',async event=>{event.preventDefault();setMessage('');const email=normEmail(emailInput.value),name=nameInput.value.trim(),password=passwordInput.value;if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){setMessage('Enter a valid email address.');emailInput.focus();return}const accounts=getAccounts();submit.disabled=true;try{
+                if(authMode==='profile'){const active=getProfile(),account=accounts[active?.email];if(!name){setMessage('Enter your name.');nameInput.focus();return}if(!account){setMessage('This local account could not be found. Sign in again.');return}account.name=name;accounts[active.email]=account;localStorage.setItem(ACCOUNTS_KEY,JSON.stringify(accounts));const updated={...active,name,updatedAt:new Date().toISOString()};localStorage.setItem(PROFILE_KEY,JSON.stringify(updated));paintProfile(updated);saveState();screen.style.display='none';return}
+                if(authMode==='signup'){if(!name){setMessage('Enter your full name.');nameInput.focus();return}if(password.length<8){setMessage('Use a password with at least 8 characters.');passwordInput.focus();return}if(password!==confirmInput.value){setMessage('Those passwords do not match.');confirmInput.focus();return}if(accounts[email]){setMode('login');emailInput.value=email;setMessage('A local profile with this email already exists. Sign in instead.');return}const first=Object.keys(accounts).length===0,credential=await hashPassword(password);accounts[email]={name,salt:credential.salt,passwordHash:credential.hash,createdAt:new Date().toISOString()};localStorage.setItem(ACCOUNTS_KEY,JSON.stringify(accounts));if(first&&localStorage.getItem(LEGACY_KEY)&&!localStorage.getItem(userDataKey(email)))localStorage.setItem(userDataKey(email),localStorage.getItem(LEGACY_KEY));clearPasswords();enterWorkspace({email,name});return}
+                const account=accounts[email];if(!account){setMessage('No local profile uses this email. Create an account to get started.');return}if(!password){setMessage('Enter your password.');passwordInput.focus();return}const credential=await hashPassword(password,account.salt);if(!matches(credential.hash,account.passwordHash)){setMessage('That email and password do not match. Try again.');clearPasswords();passwordInput.focus();return}clearPasswords();enterWorkspace({email,name:account.name})
+            }catch(error){setMessage(error?.message||'Could not save this local profile. Check browser storage and try again.')}finally{submit.disabled=false}});
+            const videos={
+                'topic-api-basics':{title:'What is REST? A Beginner’s Guide to REST APIs and How They Work',channel:'Tiny Technical Tutorials',url:'https://www.youtube.com/watch?v=hlsxmp9kc0o'},
+                'topic-python-auto':{title:'Python Automation Tutorial – How to Automate Tasks for Beginners [Full Course]',channel:'freeCodeCamp.org',url:'https://www.youtube.com/watch?v=s8XjEuplx_U'},
+                'topic-json-data':{title:'JSON Crash Course',channel:'Traversy Media',url:'https://www.youtube.com/watch?v=wI1CWzNtE-M'},
+                'topic-prompt-eng-1':{title:'Prompt Engineering Tutorial – Master ChatGPT and LLM Responses',channel:'freeCodeCamp.org',url:'https://www.youtube.com/watch?v=_ZvnD73m40o'},
+                'topic-make-zapier':{title:'Make.com Automation Tutorial for Beginners',channel:'',url:'https://www.youtube.com/watch?v=JSA2oezQWOU'},
+                'topic-n8n-workflows':{title:'Build an AI chat agent with n8n',channel:'n8n',url:'https://www.youtube.com/watch?v=yzvLfHb0nqE'},
+                'topic-no-code-database':{title:'Airtable and Notion Integration [Step By Step Guide]',channel:'Tutorials With Charles',url:'https://www.youtube.com/watch?v=H3oj3n46B6s'},
+                'topic-document-parsing':{title:'How to Automate Data Extraction from PDF Invoices (Full OCR)',channel:'PythonIA',url:'https://www.youtube.com/watch?v=bLLynJlkQks'},
+                'topic-openai-api':{title:'ChatGPT Functions – Full Tutorial for using OpenAI Functions',channel:'',url:'https://www.youtube.com/watch?v=WpQ0TqS3_68'},
+                'topic-langchain-basics':{title:'LangChain Crash Course for Beginners',channel:'freeCodeCamp.org',url:'https://www.youtube.com/watch?v=lG7Uxts9SXs'},
+                'topic-custom-tools':{title:'Build Your First AI Agent + LLM Tool Calling Explained',channel:'Ease With Data',url:'https://www.youtube.com/watch?v=E6SNu37-dCY'},
+                'topic-guardrails':{title:'Complete Beginner’s Course on AI Evaluations in 50 Minutes (2025)',channel:'Heuristica',url:'https://www.youtube.com/watch?v=TL527yTpxlk'},
+                'topic-rag-arch':{title:'Learn RAG From Scratch – Python AI Tutorial from a LangChain Engineer',channel:'LangChain',url:'https://www.youtube.com/watch?v=sVcwVQRHIc8'},
+                'topic-vector-dbs':{title:'Pinecone Vector Database Tutorial',channel:'James Briggs',url:'https://www.youtube.com/watch?v=QdDoFfkVk4w'},
+                'topic-local-llms':{title:'How to Set Up an LLM at home',channel:'Scott Detweiler',url:'https://www.youtube.com/watch?v=nhURGU0UTeM'},
+                'topic-advanced-rag':{title:'Advance RAG Course: Master All RAG Retrieval & Reranking Techniques in One Video',channel:'',url:'https://www.youtube.com/watch?v=_kpxLkH5vY0'},
+                'topic-crew-ai':{title:'CrewAI Tutorial for Beginners: Build a Team of AI Agents',channel:'Leon van Zyl',url:'https://www.youtube.com/watch?v=6NbJQsCg1VQ'},
+                'topic-voice-ai':{title:'ElevenLabs TTS API Tutorial',channel:'ElevenLabs Developers',url:'https://www.youtube.com/watch?v=W-XF7uo0bpk'},
+                'topic-twilio-voice':{title:'How to Set Up Voice AI Agents Using LiveKit + Twilio (Step by Step Guide)',channel:'Henryk Brzozowski',url:'https://www.youtube.com/watch?v=2snWgQ6Pyac'},
+                'topic-agent-evals':{title:'Getting Started with LangSmith (1/8): Tracing',channel:'LangChain',url:'https://www.youtube.com/watch?v=fA9b4D8IsPQ'}
+            };
+            ROADMAP_DATA.forEach(level=>level.topics.forEach(topic=>{if(Object.prototype.hasOwnProperty.call(videos,topic.id))topic.video=videos[topic.id]}));
+            const legacy=getProfile();paintProfile(legacy);
+            window.onload=()=>{const profile=getProfile(),accounts=getAccounts();if(profile?.email&&accounts[profile.email]){state=freshState();initState();navigateTo('dashboard')}else{setMode(Object.keys(accounts).length?'login':'signup');if(legacy&&!legacy.email)nameInput.value=legacy.name||''}};
+        })();
+    </script>
+</body>
+</html>
